@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.js",
-    "coverage": "rimraf coverage && yarn test --coverage",
+    "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
     "build:types": "rimraf types && tsc --outFile types/index.d.ts -d --emitDeclarationOnly",
     "build:lib": "rimraf lib && babel src --extensions .ts --out-dir lib --copy-files",
     "build": "yarn build:types && yarn build:lib",

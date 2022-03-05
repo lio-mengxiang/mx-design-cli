@@ -3,6 +3,8 @@ build/
 dist/
 lib/
 types/
+coverage/
+.vscode/
 
 # General
 .DS_Store

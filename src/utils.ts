@@ -48,7 +48,6 @@ export const getCustomConfig = (
 ): Partial<CustomConfig> => {
   const configPath = path.join(process.cwd(), configFileName);
   if (fs.existsSync(configPath)) {
-    // eslint-disable-next-line import/no-dynamic-require
     return require(configPath);
   }
   return {};

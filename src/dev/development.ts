@@ -38,7 +38,6 @@ export default ({ host, port }: IDevelopmentConfig) => {
     hot: true,
   };
   const runDevServer = async (port) => {
-    console.log("host: ", host);
     const devServer = new WebpackDevServer(compiler, serverConfig);
     const resPort = await choosePort(port, host);
     if (resPort !== null) {
