@@ -101,6 +101,7 @@ async function generateChangelog() {
 async function push(nextVersion: string) {
   timeLog("推送代码至git仓库", "start");
   await run(" git config --global http.proxy socks5://127.0.0.1:1080");
+  await run(" git config --global https.proxy socks5://127.0.0.1:1080");
   await run("git add .");
   await run(`git commit -m "v${nextVersion}" -n`);
   await run("git push");
