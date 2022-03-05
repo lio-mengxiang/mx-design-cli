@@ -154,7 +154,7 @@ async function main() {
       `✨ 发布流程结束 共耗时${((Date.now() - startTime) / 1000).toFixed(3)}s`
     );
   } catch (error) {
-    console.log("💣 发布失败，失败原因：", error);
+    console.log("💣 发布失败，失败原因：", error.cmd);
   }
 }
 
