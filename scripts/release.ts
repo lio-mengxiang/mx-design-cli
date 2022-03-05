@@ -91,7 +91,7 @@ async function updateVersion(nextVersion: string) {
  */
 async function generateChangelog() {
   timeLog("生成CHANGELOG.md", "start");
-  await run("npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0");
+  await run("npx conventional-changelog -p angular -i CHANGELOG.md -s");
   timeLog("生成CHANGELOG.md", "end");
 }
 
@@ -100,6 +100,7 @@ async function generateChangelog() {
  */
 async function push(nextVersion: string) {
   timeLog("推送代码至git仓库", "start");
+  await run(" git config --global http.proxy socks5://127.0.0.1:1080");
   await run("git add .");
   await run(`git commit -m "v${nextVersion}" -n`);
   await run("git push");
