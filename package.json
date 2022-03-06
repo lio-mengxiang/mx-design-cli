@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -82,6 +82,7 @@
     "through2": "^3.0.1",
     "ts-jest": "^26.5.0",
     "typescript": "^4.5.4",
+    "style-loader": "3.3.1",
     "webpack": "^5.37.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
