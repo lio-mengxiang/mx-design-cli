@@ -82,7 +82,7 @@ async function updateVersion(nextVersion: string) {
   pkg.version = nextVersion;
   timeLog("修改package.json版本号", "start");
   await fs.writeFileSync(getProjectPath("package.json"), JSON.stringify(pkg));
-  await run("npx prettier package.json --write");
+  // await run("npx prettier package.json --write");
   timeLog("修改package.json版本号", "end");
 }
 
