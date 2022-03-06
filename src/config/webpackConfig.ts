@@ -174,8 +174,12 @@ const getDevConfig = (): Configuration => {
       },
     },
   });
+
   (config.module.rules[0] as RuleSetRule).use[1].options.plugins.push(
     require.resolve("react-refresh/babel")
+  );
+  ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift(
+    "style-loader"
   );
   return config;
 };
