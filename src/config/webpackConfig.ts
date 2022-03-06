@@ -170,7 +170,7 @@ const getDevConfig = (): Configuration => {
     cache: {
       type: "filesystem",
       buildDependencies: {
-        config: [process.cwd()],
+        config: [__filename],
       },
     },
   });
