@@ -57,12 +57,6 @@ const baseConfig: Configuration = {
         test: /\.(less)$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: "../",
-            },
-          },
-          {
             loader: require.resolve("css-loader"),
             options: {
               importLoaders: 2,
@@ -128,6 +122,13 @@ const getBuildConfig = (): Configuration => {
         chunkFilename: "stylesheet/[id].[contenthash:8].css",
       }),
     ],
+  });
+
+  config.module.rules[1]?.use?.unshift({
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+      publicPath: "../",
+    },
   });
 
   config.optimization.minimizer = [
