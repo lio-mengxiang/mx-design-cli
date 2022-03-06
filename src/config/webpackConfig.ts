@@ -2,7 +2,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ReactRefreshPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import webpackMerge from "webpack-merge";
 import WebpackBar from "webpackbar";
-import webpack, { Configuration, RuleSetRule } from "webpack";
+import webpack, { Configuration, RuleSetRule, RuleSetUseItem } from "webpack";
 import babelConfig from "./babelConfig/es";
 import { DEV, BUILD_LIB, BUILD_SITE } from "../constants";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"; // 压缩css插件
@@ -124,7 +124,7 @@ const getBuildConfig = (): Configuration => {
     ],
   });
 
-  config.module.rules[1]?.use?.unshift({
+  ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift({
     loader: MiniCssExtractPlugin.loader,
     options: {
       publicPath: "../",
