@@ -91,7 +91,7 @@ async function updateVersion(nextVersion: string) {
  */
 async function generateChangelog() {
   timeLog("生成CHANGELOG.md", "start");
-  await run("npx conventional-changelog -p angular -i CHANGELOG.md -s");
+  await run("conventional-changelog -p angular -i CHANGELOG.md -s");
   timeLog("生成CHANGELOG.md", "end");
 }
 
