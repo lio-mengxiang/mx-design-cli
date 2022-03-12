@@ -14,7 +14,10 @@ const paths = {
     esm: getProjectPath("esm"),
   },
   styles: getProjectPath("src/**/*.less"),
-  scripts: [getProjectPath("src/**/*.{ts,tsx}"), getProjectPath("!src/**/__tests__/*.{ts,tsx}")],
+  scripts: [
+    getProjectPath("src/**/*.{ts,tsx}"),
+    getProjectPath("!src/**/__tests__/*.{ts,tsx}"),
+  ],
 };
 
 /**
@@ -62,7 +65,7 @@ function compileScripts(babelEnv, destDir) {
 /**
  * 编译cjs
  */
-gulp.task('compileCJS', () => {
+gulp.task("compileCJS", () => {
   const { dest } = paths;
   return compileScripts("cjs", dest.lib);
 });
@@ -70,7 +73,7 @@ gulp.task('compileCJS', () => {
 /**
  * 编译esm
  */
-gulp.task('compileESM', () => {
+gulp.task("compileESM", () => {
   const { dest } = paths;
   return compileScripts("esm", dest.esm);
 });
@@ -78,16 +81,16 @@ gulp.task('compileESM', () => {
 /**
  * 拷贝less文件
  */
-gulp.task('copyLess', () => {
+gulp.task("copyLess", () => {
   return gulp
-  .src(paths.styles)
-  .pipe(gulp.dest(paths.dest.lib))
-  .pipe(gulp.dest(paths.dest.esm));
+    .src(paths.styles)
+    .pipe(gulp.dest(paths.dest.lib))
+    .pipe(gulp.dest(paths.dest.esm));
 });
 /**
  * 生成css文件
  */
-gulp.task('less2css', () => {
+gulp.task("less2css", () => {
   return gulp
     .src(paths.styles)
     .pipe(less()) // 处理less文件
@@ -96,15 +99,14 @@ gulp.task('less2css', () => {
     .pipe(gulp.dest(paths.dest.lib))
     .pipe(gulp.dest(paths.dest.esm));
 });
-const buildEsmCjsLess = (callBack?) => {
-  // gulp.parallel('buildScripts', 'copyLess','less2css', () => {
-  //   console.log(343);
-  // })();
+const buildEsmCjsLess = ({ outDir, entry }) => {
   return new Promise((res) => {
-    return gulp.series(gulp.parallel('compileCJS', 'compileESM','copyLess','less2css'), () => {
-      callBack?.()
-      res(true);
-    })();
+    return gulp.series(
+      gulp.parallel("compileCJS", "compileESM", "copyLess", "less2css"),
+      () => {
+        res(true);
+      }
+    )();
   });
 };
 

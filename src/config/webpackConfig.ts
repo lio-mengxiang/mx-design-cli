@@ -10,6 +10,7 @@ import TerserPlugin from "terser-webpack-plugin"; // 压缩代码
 import { IWebpackConfigType } from "../interface";
 
 const baseConfig: Configuration = {
+  target: "web",
   output: {
     filename: "js/[name].js",
     chunkFilename: "js/[name].[chunkhash:8].js",

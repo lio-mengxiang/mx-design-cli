@@ -24,7 +24,6 @@
     "build:types": "rimraf types && tsc --outFile types/index.d.ts -d --emitDeclarationOnly",
     "build:lib": "rimraf lib && babel src --extensions .ts --out-dir lib --copy-files",
     "build": "yarn build:types && yarn build:lib",
-    "dev": "npm run build -- -w",
     "release": "ts-node ./scripts/release.ts"
   },
   "dependencies": {

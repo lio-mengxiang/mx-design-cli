@@ -1,155 +1,65 @@
-/* 部署思路 */
+/* 部署的函数有 */
 /*
- * 1、版本更新
- * 2、推送至 git 仓库
- * 3、组件库打包
- * 4、发布至 npm
- * 5、生成 CHANGELOG
- * 6、打 tag 并推送至 git
- */
-import inquirer from "inquirer";
-import fs from "fs";
-import child_process from "child_process";
-import util from "util";
-import chalk from "chalk";
-import semverInc from "semver/functions/inc";
-import { ReleaseType } from "semver";
-import pkg from "../package.json";
-import { getProjectPath } from "../src/utils";
-
-const exec = util.promisify(child_process.exec);
-
-const run = async (command: string) => {
-  console.log(chalk.green(command));
-  await exec(command);
-};
-
-const currentVersion = pkg.version;
-
-const getNextVersions = (): { [key in ReleaseType]: string | null } => ({
-  major: semverInc(currentVersion, "major"),
-  minor: semverInc(currentVersion, "minor"),
-  patch: semverInc(currentVersion, "patch"),
-  premajor: semverInc(currentVersion, "premajor"),
-  preminor: semverInc(currentVersion, "preminor"),
-  prepatch: semverInc(currentVersion, "prepatch"),
-  prerelease: semverInc(currentVersion, "prerelease"),
-});
-
-const timeLog = (logInfo: string, type: "start" | "end") => {
-  let info = "";
-  if (type === "start") {
-    info = `=> 开始任务：${logInfo}`;
-  } else {
-    info = `✨ 结束任务：${logInfo}`;
-  }
-  const nowDate = new Date();
-  console.log(
-    `[${nowDate.toLocaleString()}.${nowDate
-      .getMilliseconds()
-      .toString()
-      .padStart(3, "0")}] ${info}
-    `
-  );
-};
-
-/**
- * 询问获取下一次版本号
- */
-async function prompt(): Promise<string> {
-  const nextVersions = getNextVersions();
-  const { nextVersion } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "nextVersion",
-      message: `请选择将要发布的版本 (当前版本 ${currentVersion})`,
-      choices: (Object.keys(nextVersions) as Array<ReleaseType>).map(
-        (level) => ({
-          name: `${level} => ${nextVersions[level]}`,
-          value: nextVersions[level],
-        })
-      ),
-    },
-  ]);
-  return nextVersion;
-}
-
-/**
- * 更新版本号
- * @param nextVersion 新版本号
- */
-async function updateVersion(nextVersion: string) {
-  pkg.version = nextVersion;
-  timeLog("修改package.json版本号", "start");
-  await fs.writeFileSync(getProjectPath("package.json"), JSON.stringify(pkg));
-  await run("npx prettier package.json --write");
-  timeLog("修改package.json版本号", "end");
-}
-
-/**
- * 生成CHANGELOG
- */
-async function generateChangelog() {
-  timeLog("生成CHANGELOG.md", "start");
-  await run("conventional-changelog -p angular -i CHANGELOG.md -s");
-  timeLog("生成CHANGELOG.md", "end");
-}
-
-/**
- * 将代码提交至git
- */
-async function push(nextVersion: string) {
-  timeLog("推送代码至git仓库", "start");
-  await run("git add .");
-  await run(`git commit -m "v${nextVersion}" -n`);
-  await run("git push");
-  timeLog("推送代码至git仓库", "end");
-}
-
-/**
+ * 版本更新
+ * 推送至 git 仓库
  * 组件库打包
+ * 发布至 npm
+ * 生成 CHANGELOG
+ * 打 tag 并推送至 git
  */
-async function build() {
-  timeLog("打包", "start");
-  await run("npm run build");
-  timeLog("打包", "end");
-}
+// 依赖
+// conventional-changelog
+// inquirer
+// semverInc
+import { updateVersion, prompt } from "./promptNextVersion";
+import { push } from "./gitPush";
+import { getOldLog, generateChangelog } from "./generateChangelog";
+import { build } from "./build";
+import { publish } from "./publish";
+import { tag } from "./tag";
 
-/**
- * 发布至npm
- */
-async function publish() {
-  timeLog("发布", "start");
-  await run("npm publish");
-  timeLog("发布", "end");
-}
-
-/**
- * 打tag提交至git
- */
-async function tag(nextVersion: string) {
-  timeLog("打tag并推送至git", "start");
-  await run(`git tag v${nextVersion}`);
-  await run(`git push origin tag v${nextVersion}`);
-  timeLog("打tag并推送至git", "end");
-}
-
-async function main() {
+async function defaultMain() {
   try {
     const nextVersion = await prompt();
+    /* 下面这种中断promise的写法有些冗余，后续用rxjs重构一下 */
     const startTime = Date.now();
     // =================== 更新版本号 ===================
-    await updateVersion(nextVersion);
+    const backVersionFn = await updateVersion(nextVersion);
+
     // =================== 代码推送git仓库 ===================
-    await push(nextVersion);
-    // =================== 组件库打包 ===================
-    await build();
-    // =================== 发布至npm ===================
-    await publish();
+    const pushResult = await push().catch(() => false);
+    if (!pushResult) {
+      return backVersionFn();
+    }
+
     // =================== 更新changelog ===================
-    await generateChangelog();
+    const backChangelog = getOldLog();
+    const changelogResult = await generateChangelog().catch(() => false);
+    if (!changelogResult) {
+      backChangelog();
+      return backVersionFn();
+    }
+
+    // =================== 组件库打包 ===================
+    const buildResult = await build().catch(() => false);
+    if (!buildResult) {
+      backChangelog();
+      return backVersionFn();
+    }
+
+    // =================== 发布至npm ===================
+    const publishResult = await publish().catch(() => false);
+    if (!publishResult) {
+      backChangelog();
+      return backVersionFn();
+    }
     // =================== 打tag并推送至git ===================
-    await tag(nextVersion);
+    const tagResult = await tag(nextVersion).catch(() => false);
+    if (!tagResult) {
+      backChangelog();
+      return backVersionFn();
+    }
+
     console.log(
       `✨ 发布流程结束 共耗时${((Date.now() - startTime) / 1000).toFixed(3)}s`
     );
@@ -158,4 +68,4 @@ async function main() {
   }
 }
 
-main();
+export default defaultMain;
