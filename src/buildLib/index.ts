@@ -11,6 +11,6 @@ export const buildLib = (commander) => {
     .option("-a, --analyzer", "是否启用分析器")
     .option("-e, --entry <path>", "打包路径入口文件", "./src/index")
     .option("-d, --out-dir <path>", "输出目录", "./dist")
-    .option("-m, --mode <lib|umd>", "打包模式 目前支持umd和umd+es两种")
+    .option("-m, --mode <es|umd>", "打包模式 目前支持umd和es两种")
     .action(build);
 };

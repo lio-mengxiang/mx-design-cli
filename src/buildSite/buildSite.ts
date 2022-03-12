@@ -6,6 +6,7 @@ import {
   getProjectConfig,
   syncChainFns,
   isAddForkTsPlugin,
+  logger,
 } from "../utils";
 import { IDeployConfig } from "../interface";
 
@@ -27,5 +28,9 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
     );
   }
 
-  webpack(config).run(() => {});
+  webpack(config).run((err) => {
+    if (err) {
+      logger.error("webpackError: ", JSON.stringify(err));
+    }
+  });
 };

@@ -108,7 +108,7 @@ const baseConfig: Configuration = {
   plugins: [new WebpackBar({})],
 };
 
-const getBuildConfig = (): Configuration => {
+export const getBuildConfig = (): Configuration => {
   let config: Configuration = webpackMerge(baseConfig, {
     mode: "production",
     devtool: "hidden-source-map",

@@ -14,7 +14,12 @@ const buildEsmCjsLessAsync = async ({ outDir, entry }) => {
   logger.success("EsmCjsLess computed");
 };
 
-// build for umd
+/**
+ * build for umd
+ * @param analyzer 是否启用分析包插件
+ * @param outDir 输出目录
+ * @param entry 打包的入口文件
+ */
 const buldUmd = async ({ analyzer, outDir, entry }) => {
   const customizePlugins = [];
   const { banner } = getCustomConfig();
@@ -44,7 +49,12 @@ const buldUmd = async ({ analyzer, outDir, entry }) => {
       }
 
       return webpack(config).run((err, stats) => {
-        return err ? reject(err) : resolve(stats);
+        if (err) {
+          logger.error("webpackError: ", JSON.stringify(err));
+          reject(err);
+        } else {
+          resolve(stats);
+        }
       });
     });
   };
@@ -55,9 +65,8 @@ const buldUmd = async ({ analyzer, outDir, entry }) => {
 
 const buildLib = async ({ analyzer, mode, entry, outDir }) => {
   if (mode === "umd") {
-    return await buldUmd({ analyzer, outDir, entry });
-  } else {
     await buldUmd({ analyzer, outDir, entry });
+  } else if (mode === "es") {
     await buildEsmCjsLessAsync({ outDir, entry });
   }
 };

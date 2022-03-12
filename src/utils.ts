@@ -92,8 +92,8 @@ function noop(msg: string): string {
   return msg;
 }
 
-function log(fn: Function): (msg: string) => void {
-  return (msg: string): void => {
+function log(fn: Function) {
+  return (...msg: string[]): void => {
     console.log(fn(msg));
   };
 }

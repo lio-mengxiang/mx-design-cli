@@ -99,10 +99,22 @@ gulp.task("less2css", () => {
     .pipe(gulp.dest(paths.dest.lib))
     .pipe(gulp.dest(paths.dest.esm));
 });
+
 const buildEsmCjsLess = ({ outDir, entry }) => {
   return new Promise((res) => {
     return gulp.series(
-      gulp.parallel("compileCJS", "compileESM", "copyLess", "less2css"),
+      gulp.parallel(
+        () => {
+          const { dest } = paths;
+          return compileScripts("cjs", dest.lib);
+        },
+        () => {
+          const { dest } = paths;
+          return compileScripts("esm", dest.esm);
+        },
+        "copyLess",
+        "less2css"
+      ),
       () => {
         res(true);
       }
