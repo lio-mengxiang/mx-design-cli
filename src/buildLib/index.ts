@@ -8,9 +8,12 @@ export const buildLib = (commander) => {
   commander
     .command(BUILD_LIB)
     .description("打包编译仓库")
-    .option("-a, --analyzer", "是否启用分析器")
+    .option("-a, --analyzerUmd", "是否启用分析器")
     .option("-e, --entry <path>", "打包路径入口文件", "./src/index")
-    .option("-d, --out-dir <path>", "输出目录", "./dist")
-    .option("-m, --mode <es|umd>", "打包模式 目前支持umd和es两种")
+    .option("-e, --entry-dir <path>", "打包路径入口目录", "./src")
+    .option("-du, --out-dir-umd <path>", "输出umd格式的目录", "./dist")
+    .option("-de, --out-dir-esm <path>", "输出ed格式的目录", "./es")
+    .option("-dc, --out-dir-cjs <path>", "输出cjs格式的目录", "./lib")
+    .option("-m, --mode <esm|umd|cjs>", "打包模式 目前支持umd和esm两种")
     .action(build);
 };

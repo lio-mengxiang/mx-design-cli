@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "types": ["webpack", "node", "jest"]
   },
-  "include": ["src"],
+  "include": ["src", "webpack.config.js"],
   "exclude": ["node_modules", "lib", "es", "**/__tests__/**", "tests"]
 }

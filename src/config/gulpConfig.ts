@@ -6,17 +6,17 @@ import cssnano from "gulp-cssnano";
 import through2 from "through2";
 import babelEsConfig from "./babelConfig/es";
 import babelCjsConfig from "./babelConfig/lib";
-import { getProjectPath } from "../utils";
+import { getProjectPath, logger } from "../utils";
 
 const paths = {
   dest: {
     lib: getProjectPath("lib"),
     esm: getProjectPath("esm"),
   },
-  styles: getProjectPath("src/**/*.less"),
-  scripts: [
-    getProjectPath("src/**/*.{ts,tsx}"),
-    getProjectPath("!src/**/__tests__/*.{ts,tsx}"),
+  styles: (path) => getProjectPath(`${path}/**/*.less`),
+  scripts: (path) => [
+    getProjectPath(`${path}/**/*.{ts,tsx,js,jsx}`),
+    getProjectPath(`!${path}/**/__tests__/*.{ts,tsx,js,jsx}`),
   ],
 };
 
@@ -38,12 +38,11 @@ function cssInjection(content) {
  * @param {string} babelEnv babel环境变量
  * @param {string} destDir 目标目录
  */
-function compileScripts(babelEnv, destDir) {
+function compileScripts(mode, destDir, newEntryDir) {
   const { scripts } = paths;
-  process.env.BABEL_ENV = babelEnv;
   return gulp
-    .src(scripts)
-    .pipe(babel(babelEnv === "esm" ? babelEsConfig : babelCjsConfig)) // 使用gulp-babel处理
+    .src(newEntryDir ? scripts(newEntryDir) : scripts("src"))
+    .pipe(babel(mode === "esm" ? babelEsConfig : babelCjsConfig)) // 使用gulp-babel处理
     .pipe(
       through2.obj(function z(file, encoding, next) {
         this.push(file.clone());
@@ -61,22 +60,6 @@ function compileScripts(babelEnv, destDir) {
     )
     .pipe(gulp.dest(destDir));
 }
-
-/**
- * 编译cjs
- */
-gulp.task("compileCJS", () => {
-  const { dest } = paths;
-  return compileScripts("cjs", dest.lib);
-});
-
-/**
- * 编译esm
- */
-gulp.task("compileESM", () => {
-  const { dest } = paths;
-  return compileScripts("esm", dest.esm);
-});
 
 /**
  * 拷贝less文件
@@ -99,27 +82,47 @@ gulp.task("less2css", () => {
     .pipe(gulp.dest(paths.dest.lib))
     .pipe(gulp.dest(paths.dest.esm));
 });
+const buildEsmCjsLess = ({ outDirLib, entryDir, mode, outDirEsm }) => {
+  const newEntryDir =
+    entryDir?.[entryDir.length - 1] === "/"
+      ? entryDir.slice(0, entryDir.length - 1)
+      : entryDir;
+  if (mode === "cjs") {
+    /**
+     * 编译cjs
+     */
+    gulp.task("compileCJS", () => {
+      return compileScripts(mode, outDirLib, newEntryDir);
+    });
 
-const buildEsmCjsLess = ({ outDir, entry }) => {
-  return new Promise((res) => {
-    return gulp.series(
-      gulp.parallel(
+    return new Promise((res) => {
+      return gulp.series(
+        gulp.parallel("compileCJS", "copyLess", "less2css"),
         () => {
-          const { dest } = paths;
-          return compileScripts("cjs", dest.lib);
-        },
+          logger.success("compileCJS done");
+          res(true);
+        }
+      )();
+    });
+  }
+  if (mode === "esm") {
+    /**
+     * 编译esm
+     */
+    gulp.task("compileESM", () => {
+      return compileScripts(mode, outDirEsm, newEntryDir);
+    });
+
+    return new Promise((res) => {
+      return gulp.series(
+        gulp.parallel("compileESM", "copyLess", "less2css"),
         () => {
-          const { dest } = paths;
-          return compileScripts("esm", dest.esm);
-        },
-        "copyLess",
-        "less2css"
-      ),
-      () => {
-        res(true);
-      }
-    )();
-  });
+          logger.success("compileESM done");
+          res(true);
+        }
+      )();
+    });
+  }
 };
 
 export default buildEsmCjsLess;

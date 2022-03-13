@@ -8,19 +8,24 @@ import { BUILD_LIB } from "../constants";
 
 const { name } = require(getProjectPath("package.json"));
 
-const buildEsmCjsLessAsync = async ({ outDir, entry }) => {
+const buildEsmCjsLessAsync = async ({
+  outDirLib,
+  outDirEsm,
+  entryDir,
+  mode,
+}) => {
   logger.info("building EsmCjsLess");
-  await buildEsmCjsLess({ outDir, entry });
+  await buildEsmCjsLess({ outDirLib, entryDir, mode, outDirEsm });
   logger.success("EsmCjsLess computed");
 };
 
 /**
  * build for umd
  * @param analyzer 是否启用分析包插件
- * @param outDir 输出目录
+ * @param outDirUmd 输出目录
  * @param entry 打包的入口文件
  */
-const buldUmd = async ({ analyzer, outDir, entry }) => {
+const buldUmd = async ({ analyzerUmd, outDirUmd, entry }) => {
   const customizePlugins = [];
   const { banner } = getCustomConfig();
 
@@ -33,13 +38,13 @@ const buldUmd = async ({ analyzer, outDir, entry }) => {
           [name]: getProjectPath(entry),
         },
         output: {
-          path: getProjectPath(outDir),
+          path: getProjectPath(outDirUmd),
           library: name,
         },
         plugins: customizePlugins,
       });
 
-      if (analyzer) {
+      if (analyzerUmd) {
         config.plugins.push(
           new BundleAnalyzerPlugin({
             analyzerMode: "static",
@@ -63,11 +68,19 @@ const buldUmd = async ({ analyzer, outDir, entry }) => {
   logger.success("umd computed");
 };
 
-const buildLib = async ({ analyzer, mode, entry, outDir }) => {
+const buildLib = async ({
+  analyzerUmd,
+  mode,
+  entry,
+  outDirEsm,
+  outDirLib,
+  outDirUmd,
+  entryDir,
+}) => {
   if (mode === "umd") {
-    await buldUmd({ analyzer, outDir, entry });
-  } else if (mode === "es") {
-    await buildEsmCjsLessAsync({ outDir, entry });
+    await buldUmd({ analyzerUmd, outDirUmd, entry });
+  } else if (mode === "esm" || mode === "cjs") {
+    await buildEsmCjsLessAsync({ outDirLib, outDirEsm, entryDir, mode });
   }
 };
 

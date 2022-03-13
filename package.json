@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -18,6 +18,7 @@
     "types"
   ],
   "scripts": {
+    "a": "ts-node ./src/index.ts buildLib -m es",
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
