@@ -9,8 +9,8 @@ import {
   logger,
 } from "../utils";
 import { IDeployConfig } from "../interface";
-
 import { BUILD_SITE } from "../constants";
+
 export default ({ outDir, analyzer }: IDeployConfig) => {
   const config = syncChainFns(
     getWebpackConfig,

@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -18,7 +18,8 @@
     "types"
   ],
   "scripts": {
-    "a": "ts-node ./src/index.ts buildLib -m es",
+    "a": "ts-node ./src/index.ts buildLib -m umd --entry ./components/index --output-name mx-cli",
+    "b": "mx help buildLib",
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
@@ -44,6 +45,7 @@
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.1",
     "change-case": "^4.1.2",
+    "classnames": "^2.3.1",
     "commander": "^7.2.0",
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "3.4.1",
@@ -77,12 +79,12 @@
     "react-refresh": "^0.9.0",
     "rimraf": "^3.0.2",
     "semver": "7.3.5",
+    "style-loader": "3.3.1",
     "terser-webpack-plugin": "^5.1.2",
     "thread-loader": "3.0.4",
     "through2": "^3.0.1",
     "ts-jest": "^26.5.0",
     "typescript": "^4.5.4",
-    "style-loader": "3.3.1",
     "webpack": "^5.37.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",

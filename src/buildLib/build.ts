@@ -1,36 +1,29 @@
 import webpack from "webpack";
 import webpackMerge from "webpack-merge";
-import buildEsmCjsLess from "../config/gulpConfig";
+import { copyLess, less2css, buildCjs, buildEsm } from "../config/gulpConfig";
 import getWebpackConfig from "../config/webpackConfig";
-import { getProjectPath, getCustomConfig, logger } from "../utils";
+import { getProjectPath, logger, run, compose } from "../utils";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { BUILD_LIB } from "../constants";
+import {
+  BUILD_LIB,
+  CJS,
+  ESM,
+  UMD,
+  COPY_LESS,
+  LESS_2_LESS,
+  CLEAN_DIR,
+} from "../constants";
 
 const { name } = require(getProjectPath("package.json"));
-
-const buildEsmCjsLessAsync = async ({
-  outDirLib,
-  outDirEsm,
-  entryDir,
-  mode,
-}) => {
-  logger.info("building EsmCjsLess");
-  await buildEsmCjsLess({ outDirLib, entryDir, mode, outDirEsm });
-  logger.success("EsmCjsLess computed");
-};
-
 /**
  * build for umd
  * @param analyzer 是否启用分析包插件
  * @param outDirUmd 输出目录
  * @param entry 打包的入口文件
  */
-const buldUmd = async ({ analyzerUmd, outDirUmd, entry }) => {
+const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
   const customizePlugins = [];
-  const { banner } = getCustomConfig();
-
-  banner && customizePlugins.push(new webpack.BannerPlugin(banner));
-
+  const realName = outputName || name;
   const umdTask = (type) => {
     return new Promise((resolve, reject) => {
       const config = webpackMerge(getWebpackConfig(type), {
@@ -40,6 +33,8 @@ const buldUmd = async ({ analyzerUmd, outDirUmd, entry }) => {
         output: {
           path: getProjectPath(outDirUmd),
           library: name,
+          // libraryTarget: "umd",
+          // libraryExport: "default",
         },
         plugins: customizePlugins,
       });
@@ -52,8 +47,10 @@ const buldUmd = async ({ analyzerUmd, outDirUmd, entry }) => {
           })
         );
       }
-
       return webpack(config).run((err, stats) => {
+        if (stats.compilation.errors?.length) {
+          console.log("webpackError: ", stats.compilation.errors);
+        }
         if (err) {
           logger.error("webpackError: ", JSON.stringify(err));
           reject(err);
@@ -68,20 +65,111 @@ const buldUmd = async ({ analyzerUmd, outDirUmd, entry }) => {
   logger.success("umd computed");
 };
 
+const bulidLibFns = {
+  [CLEAN_DIR]: async (next, otherOptions) => {
+    await run(
+      `rimraf ${otherOptions.outDirEsm} ${otherOptions.outDirCjs} ${otherOptions.outDirUmd}`,
+      `打包前删除 ${otherOptions.outDirEsm} ${otherOptions.outDirCjs} ${otherOptions.outDirUmd} 文件夹`
+    );
+    next();
+  },
+  [LESS_2_LESS]: async (next, otherOptions) => {
+    logger.info("less2css ing...");
+    await less2css({
+      outDirCjs: otherOptions.outDirCjs,
+      entryDir: otherOptions.entryDir,
+      mode: otherOptions.mode,
+      outDirEsm: otherOptions.outDirEsm,
+    });
+    logger.success("less2css computed");
+    next();
+  },
+  [UMD]: async (next, otherOptions) => {
+    await buildUmd({
+      analyzerUmd: otherOptions.analyzerUmd,
+      outDirUmd: otherOptions.outDirUmd,
+      entry: otherOptions.entry,
+      outputName: otherOptions.outputName,
+    });
+    next();
+  },
+  [COPY_LESS]: async (next, otherOptions) => {
+    logger.info("copyLess ing...");
+    await copyLess({
+      outDirCjs: otherOptions.outDirCjs,
+      entryDir: otherOptions.entryDir,
+      mode: otherOptions.mode,
+      outDirEsm: otherOptions.outDirEsm,
+    });
+    logger.success("copyLess computed");
+    next();
+  },
+  [CJS]: async (next, otherOptions) => {
+    logger.info("buildCJS ing...");
+    await buildCjs({
+      mode: otherOptions.mode,
+      outDirCjs: otherOptions.outDirCjs,
+      entryDir: otherOptions.entryDir,
+    });
+    logger.success("buildCJS computed");
+    next();
+  },
+  [ESM]: async (next, otherOptions) => {
+    logger.info("buildESM ing...");
+    await buildEsm({
+      mode: otherOptions.mode,
+      outDirEsm: otherOptions.outDirEsm,
+      entryDir: otherOptions.entryDir,
+    });
+    logger.success("buildESM computed");
+    next();
+  },
+};
+
 const buildLib = async ({
   analyzerUmd,
   mode,
   entry,
   outDirEsm,
-  outDirLib,
+  outDirCjs,
   outDirUmd,
+  copyLess,
   entryDir,
+  less2Less,
+  cleanDir,
+  outputName,
 }) => {
-  if (mode === "umd") {
-    await buldUmd({ analyzerUmd, outDirUmd, entry });
-  } else if (mode === "esm" || mode === "cjs") {
-    await buildEsmCjsLessAsync({ outDirLib, outDirEsm, entryDir, mode });
+  const buildProcess = [bulidLibFns[CLEAN_DIR]];
+  if (mode === UMD) {
+    buildProcess.push(bulidLibFns[UMD]);
   }
+  if (mode === ESM) {
+    buildProcess.push(bulidLibFns[ESM]);
+  }
+  if (mode === CJS) {
+    buildProcess.push(bulidLibFns[CJS]);
+  }
+  if (less2Less) {
+    less2Less = LESS_2_LESS;
+    buildProcess.push(bulidLibFns[LESS_2_LESS]);
+  }
+  if (copyLess) {
+    copyLess = COPY_LESS;
+    buildProcess.push(bulidLibFns[COPY_LESS]);
+  }
+  compose(buildProcess, {
+    analyzerUmd,
+    mode,
+    entry,
+    outDirEsm,
+    outDirCjs,
+    outDirUmd,
+    copyLess,
+    entryDir,
+    less2Less,
+    cleanDir,
+    outputName,
+  });
 };
 
 export default buildLib;

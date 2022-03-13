@@ -8,11 +8,6 @@ import chalk from "chalk";
 import util from "util";
 import child_process from "child_process";
 
-export interface FileInfo {
-  filePath?: string;
-  type?: string;
-}
-
 // 同步函数链
 export const syncChainFns = (...fns) => {
   const [firstFn, ...otherFns] = fns;
@@ -108,7 +103,17 @@ export const logger = {
 
 const exec = util.promisify(child_process.exec);
 
-export const run = async (command: string) => {
-  logger.info(command);
+export const run = async (command: string, info: string) => {
+  logger.info(info || command);
   await exec(command);
 };
+
+export function compose(middleware, initOptions) {
+  const otherOptions = initOptions || {};
+  function dispatch(index) {
+    if (index == middleware.length) return;
+    const currMiddleware = middleware[index];
+    return currMiddleware(() => dispatch(++index), otherOptions);
+  }
+  dispatch(0);
+}

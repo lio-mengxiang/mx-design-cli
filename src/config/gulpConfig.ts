@@ -6,12 +6,13 @@ import cssnano from "gulp-cssnano";
 import through2 from "through2";
 import babelEsConfig from "./babelConfig/es";
 import babelCjsConfig from "./babelConfig/lib";
-import { getProjectPath, logger } from "../utils";
+import { getProjectPath } from "../utils";
+import { CJS, ESM, LIB } from "../constants";
 
 const paths = {
   dest: {
-    lib: getProjectPath("lib"),
-    esm: getProjectPath("esm"),
+    lib: getProjectPath(LIB),
+    esm: getProjectPath(ESM),
   },
   styles: (path) => getProjectPath(`${path}/**/*.less`),
   scripts: (path) => [
@@ -41,8 +42,8 @@ function cssInjection(content) {
 function compileScripts(mode, destDir, newEntryDir) {
   const { scripts } = paths;
   return gulp
-    .src(newEntryDir ? scripts(newEntryDir) : scripts("src"))
-    .pipe(babel(mode === "esm" ? babelEsConfig : babelCjsConfig)) // 使用gulp-babel处理
+    .src(scripts(newEntryDir))
+    .pipe(babel(mode === ESM ? babelEsConfig : babelCjsConfig)) // 使用gulp-babel处理
     .pipe(
       through2.obj(function z(file, encoding, next) {
         this.push(file.clone());
@@ -61,68 +62,90 @@ function compileScripts(mode, destDir, newEntryDir) {
     .pipe(gulp.dest(destDir));
 }
 
-/**
- * 拷贝less文件
- */
-gulp.task("copyLess", () => {
-  return gulp
-    .src(paths.styles)
-    .pipe(gulp.dest(paths.dest.lib))
-    .pipe(gulp.dest(paths.dest.esm));
-});
-/**
- * 生成css文件
- */
-gulp.task("less2css", () => {
-  return gulp
-    .src(paths.styles)
-    .pipe(less()) // 处理less文件
-    .pipe(autoprefixer()) // 根据browserslistrc增加前缀
-    .pipe(cssnano({ zindex: false, reduceIdents: false })) // 压缩
-    .pipe(gulp.dest(paths.dest.lib))
-    .pipe(gulp.dest(paths.dest.esm));
-});
-const buildEsmCjsLess = ({ outDirLib, entryDir, mode, outDirEsm }) => {
-  const newEntryDir =
-    entryDir?.[entryDir.length - 1] === "/"
-      ? entryDir.slice(0, entryDir.length - 1)
-      : entryDir;
-  if (mode === "cjs") {
-    /**
-     * 编译cjs
-     */
-    gulp.task("compileCJS", () => {
-      return compileScripts(mode, outDirLib, newEntryDir);
-    });
+const copyLess = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
+  const newEntryDir = getNewEntryDir(entryDir);
+  /**
+   * 拷贝less文件
+   */
+  gulp.task("copyLess", () => {
+    const source = gulp.src(paths.styles(newEntryDir));
+    if (mode === CJS) {
+      source.pipe(gulp.dest(outDirCjs));
+    }
+    if (mode === ESM) {
+      source.pipe(gulp.dest(outDirEsm));
+    }
+    return source;
+  });
 
-    return new Promise((res) => {
-      return gulp.series(
-        gulp.parallel("compileCJS", "copyLess", "less2css"),
-        () => {
-          logger.success("compileCJS done");
-          res(true);
-        }
-      )();
-    });
-  }
-  if (mode === "esm") {
-    /**
-     * 编译esm
-     */
-    gulp.task("compileESM", () => {
-      return compileScripts(mode, outDirEsm, newEntryDir);
-    });
-
-    return new Promise((res) => {
-      return gulp.series(
-        gulp.parallel("compileESM", "copyLess", "less2css"),
-        () => {
-          logger.success("compileESM done");
-          res(true);
-        }
-      )();
-    });
-  }
+  return new Promise((res) => {
+    return gulp.series("copyLess", () => {
+      res(true);
+    })();
+  });
 };
 
-export default buildEsmCjsLess;
+const getNewEntryDir = (entryDir) =>
+  entryDir?.[entryDir.length - 1] === "/"
+    ? entryDir.slice(0, entryDir.length - 1)
+    : entryDir;
+
+const less2css = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
+  const newEntryDir = getNewEntryDir(entryDir);
+  /**
+   * 生成css文件
+   */
+  gulp.task("less2css", () => {
+    const source = gulp
+      .src(paths.styles(newEntryDir))
+      .pipe(less()) // 处理less文件
+      .pipe(autoprefixer()) // 根据browserslistrc增加前缀
+      .pipe(cssnano({ zindex: false, reduceIdents: false })); // 压缩
+    if (mode === CJS) {
+      source.pipe(gulp.dest(outDirCjs));
+    }
+    if (mode === ESM) {
+      source.pipe(gulp.dest(outDirEsm));
+    }
+    return source;
+  });
+
+  return new Promise((res) => {
+    return gulp.series("less2css", () => {
+      res(true);
+    })();
+  });
+};
+const buildCjs = ({ mode, outDirCjs, entryDir }) => {
+  const newEntryDir = getNewEntryDir(entryDir);
+  /**
+   * 编译cjs
+   */
+  gulp.task("compileCJS", () => {
+    return compileScripts(mode, outDirCjs, newEntryDir);
+  });
+
+  return new Promise((res) => {
+    return gulp.series("compileCJS", () => {
+      res(true);
+    })();
+  });
+};
+
+const buildEsm = ({ mode, outDirEsm, entryDir }) => {
+  const newEntryDir = getNewEntryDir(entryDir);
+  /**
+   * 编译esm
+   */
+  gulp.task("compileESM", () => {
+    return compileScripts(mode, outDirEsm, newEntryDir);
+  });
+
+  return new Promise((res) => {
+    return gulp.series("compileESM", () => {
+      res(true);
+    })();
+  });
+};
+
+export { copyLess, less2css, buildCjs, buildEsm };
