@@ -15,6 +15,13 @@ import {
 } from "../constants";
 
 const { name } = require(getProjectPath("package.json"));
+const checkName = (outputName, name) => {
+  if (!outputName && name?.includes("/")) {
+    logger.warn(
+      "package.json的包名包含斜杠，webpack打包时会以斜杠来建立文件夹，所以请注意打包后文件名是否符合你的要求"
+    );
+  }
+};
 /**
  * build for umd
  * @param analyzer 是否启用分析包插件
@@ -24,17 +31,18 @@ const { name } = require(getProjectPath("package.json"));
 const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
   const customizePlugins = [];
   const realName = outputName || name;
+  checkName(outputName, name);
   const umdTask = (type) => {
     return new Promise((resolve, reject) => {
       const config = webpackMerge(getWebpackConfig(type), {
         entry: {
-          [name]: getProjectPath(entry),
+          [realName]: getProjectPath(entry),
         },
         output: {
           path: getProjectPath(outDirUmd),
-          library: name,
-          // libraryTarget: "umd",
-          // libraryExport: "default",
+          library: realName,
+          libraryTarget: "umd",
+          libraryExport: "default",
         },
         plugins: customizePlugins,
       });
@@ -135,7 +143,7 @@ const buildLib = async ({
   outDirUmd,
   copyLess,
   entryDir,
-  less2Less,
+  less2Css,
   cleanDir,
   outputName,
 }) => {
@@ -149,8 +157,8 @@ const buildLib = async ({
   if (mode === CJS) {
     buildProcess.push(bulidLibFns[CJS]);
   }
-  if (less2Less) {
-    less2Less = LESS_2_LESS;
+  if (less2Css) {
+    less2Css = LESS_2_LESS;
     buildProcess.push(bulidLibFns[LESS_2_LESS]);
   }
   if (copyLess) {
@@ -166,7 +174,7 @@ const buildLib = async ({
     outDirUmd,
     copyLess,
     entryDir,
-    less2Less,
+    less2Css,
     cleanDir,
     outputName,
   });

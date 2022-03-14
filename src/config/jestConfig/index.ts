@@ -1,8 +1,6 @@
-import { getProjectPath } from "../../utils";
+import pkg from "../../../package.json";
 
-const pkg = require(getProjectPath("package.json"));
-
-module.exports = {
+export default {
   displayName: {
     name: pkg.name,
     color: "blue",

@@ -18,8 +18,6 @@
     "types"
   ],
   "scripts": {
-    "a": "ts-node ./src/index.ts buildLib -m umd --entry ./components/index --output-name mx-cli",
-    "b": "mx help buildLib",
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",

@@ -8,6 +8,6 @@ export const ESM = "esm";
 export const CJS = "cjs";
 export const LIB = "lib";
 export const UMD = "umd";
-export const LESS_2_LESS = "less2Less";
+export const LESS_2_LESS = "less2Css";
 export const COPY_LESS = "copyLess";
 export const CLEAN_DIR = "cleanDir";
