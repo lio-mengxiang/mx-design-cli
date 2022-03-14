@@ -109,7 +109,7 @@ const baseConfig: Configuration = {
 };
 
 export const getBuildConfig = (): Configuration => {
-  let config: Configuration = webpackMerge(baseConfig, {
+  let config: Configuration = webpackMerge({}, baseConfig, {
     mode: "production",
     devtool: "hidden-source-map",
     output: {
@@ -155,7 +155,7 @@ export const getBuildConfig = (): Configuration => {
 };
 
 const getDevConfig = (): Configuration => {
-  let config = webpackMerge(baseConfig, {
+  let config = webpackMerge({}, baseConfig, {
     mode: "development",
     devtool: "eval-cheap-source-map",
     output: {

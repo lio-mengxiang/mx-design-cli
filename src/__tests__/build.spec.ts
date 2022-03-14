@@ -10,6 +10,7 @@ const config = syncChainFns(
   getProjectConfig,
   isAddForkTsPlugin
 )(BUILD_SITE);
+
 const pluginsName = config.plugins.map((v) => v.constructor.name);
 
 describe("buildSite", () => {

@@ -11,6 +11,7 @@ const config = syncChainFns(
   getProjectConfig,
   isAddForkTsPlugin
 )(DEV);
+
 describe("runDev", () => {
   afterAll(() => {
     jest.resetAllMocks();
