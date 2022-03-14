@@ -1,8 +1,13 @@
 module.exports = {
   rootDir: process.cwd(),
-  testMatch: ["<rootDir>/**/__tests__/**/*.[jt]s?(x)"],
+  testMatch: ["<rootDir>/**/__tests__/**/*.{js,jsx,ts,tsx}"],
   preset: "ts-jest",
-  testPathIgnorePatterns: ["<rootDir>/lib/", "<rootDir>/node_modules/"],
+  testPathIgnorePatterns: [
+    "<rootDir>/lib/",
+    "<rootDir>/node_modules/",
+    "<rootDir>/dist/",
+    "<rootDir>/esm/",
+  ],
   collectCoverageFrom: [
     "<rootDir>/**/*.{ts,tsx}",
     "!<rootDir>/*/PropsType.{ts,tsx}",
