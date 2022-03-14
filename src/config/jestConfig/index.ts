@@ -1,6 +1,7 @@
+const fileName = ".{js,jsx,ts,tsx}";
 module.exports = {
   rootDir: process.cwd(),
-  testMatch: ["<rootDir>/**/__tests__/**/*.{js,jsx,ts,tsx}"],
+  testMatch: [`<rootDir>/**/__tests__/**/*${fileName}`],
   preset: "ts-jest",
   testPathIgnorePatterns: [
     "<rootDir>/lib/",
@@ -9,11 +10,10 @@ module.exports = {
     "<rootDir>/esm/",
   ],
   collectCoverageFrom: [
-    "<rootDir>/**/*.{ts,tsx}",
-    "!<rootDir>/*/PropsType.{ts,tsx}",
-    "!<rootDir>/**/style/*.{ts,tsx}",
+    `<rootDir>/**/*${fileName}`,
+    `!<rootDir>/*/PropsType${fileName}`,
+    `!<rootDir>/**/style/*${fileName}`,
     "!<rootDir>/style/**/*",
     "!<rootDir>/**/__tests__/*",
   ],
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
 };
