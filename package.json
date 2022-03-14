@@ -18,6 +18,7 @@
     "types"
   ],
   "scripts": {
+    "a": "ts-node ./src/index.ts test",
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
@@ -87,10 +88,10 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "@types/jest": "27.4.1"
   },
   "devDependencies": {
-    "@types/jest": "27.4.1",
     "@types/node": "^15.3.0",
     "@types/webpack": "4.41.26",
     "conventional-changelog-cli": "^2.2.2",
