@@ -15,5 +15,5 @@ export interface ITestConfig {
   updateSnapshot: boolean;
   coverage: boolean;
   setupFilesAfterEnv: string;
-  isWatch: boolean;
+  watch?: boolean;
 }
