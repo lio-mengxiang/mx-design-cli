@@ -4,15 +4,7 @@ import { copyLess, less2css, buildCjs, buildEsm } from "../config/gulpConfig";
 import getWebpackConfig from "../config/webpackConfig";
 import { getProjectPath, logger, run, compose } from "../utils";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import {
-  BUILD_LIB,
-  CJS,
-  ESM,
-  UMD,
-  COPY_LESS,
-  LESS_2_LESS,
-  CLEAN_DIR,
-} from "../constants";
+import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from "../constants";
 
 const { name } = require(getProjectPath("package.json"));
 const checkName = (outputName, name) => {
@@ -27,6 +19,7 @@ const checkName = (outputName, name) => {
  * @param analyzer 是否启用分析包插件
  * @param outDirUmd 输出目录
  * @param entry 打包的入口文件
+ * @param outputName 打包出来的名字
  */
 const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
   const customizePlugins = [];
@@ -74,14 +67,7 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
 };
 
 const bulidLibFns = {
-  [CLEAN_DIR]: async (next, otherOptions) => {
-    await run(
-      `rimraf ${otherOptions.outDirEsm} ${otherOptions.outDirCjs} ${otherOptions.outDirUmd}`,
-      `打包前删除 ${otherOptions.outDirEsm} ${otherOptions.outDirCjs} ${otherOptions.outDirUmd} 文件夹`
-    );
-    next();
-  },
-  [LESS_2_LESS]: async (next, otherOptions) => {
+  [LESS_2_CSS]: async (next, otherOptions) => {
     logger.info("less2css ing...");
     await less2css({
       outDirCjs: otherOptions.outDirCjs,
@@ -147,7 +133,7 @@ const buildLib = async ({
   cleanDir,
   outputName,
 }) => {
-  const buildProcess = [bulidLibFns[CLEAN_DIR]];
+  const buildProcess = [];
   if (mode === UMD) {
     buildProcess.push(bulidLibFns[UMD]);
   }
@@ -158,8 +144,8 @@ const buildLib = async ({
     buildProcess.push(bulidLibFns[CJS]);
   }
   if (less2Css) {
-    less2Css = LESS_2_LESS;
-    buildProcess.push(bulidLibFns[LESS_2_LESS]);
+    less2Css = LESS_2_CSS;
+    buildProcess.push(bulidLibFns[LESS_2_CSS]);
   }
   if (copyLess) {
     copyLess = COPY_LESS;

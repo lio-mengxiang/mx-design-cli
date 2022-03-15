@@ -38,6 +38,7 @@ function cssInjection(content) {
  * 编译脚本文件
  * @param {string} babelEnv babel环境变量
  * @param {string} destDir 目标目录
+ * @param {string} newEntryDir 入口目录
  */
 function compileScripts(mode, destDir, newEntryDir) {
   const { scripts } = paths;

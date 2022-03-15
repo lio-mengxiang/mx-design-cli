@@ -1,0 +1,48 @@
+{
+    "name": "example",
+    "version": "0.0.1",
+    "description": "React UI Library",
+    "private": true,
+    "scripts": {
+        "start": "mx dev",
+        "build:types": "rimraf types && tsc --outDir types -d --emitDeclarationOnly",
+        "build:es": "rimraf esm && mx buildLib --mode esm --less-2-css --copy-less",
+        "build:lib": "rimraf lib && mx build --mode lib --less-2-css --copy-less",
+        "build:umd": "rimraf dist && mx buildLib --mode umd --entry ./components/index",
+        "build": "yarn build:types && yarn build:lib && yarn build:es && yarn build:umd",
+        "buildLibHelp": "mx help buildLib",
+        "buildSiteHelp": "mx help buildSite",
+        "testHelp": "mx help test",
+        "devHelp": "mx help dev"
+    },
+    "directories": {
+        "lib": "lib"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "classnames": "^2.2.6",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^5.0.0",
+        "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "file-loader": "^6.2.0",
+        "gh-pages": "^3.1.0",
+        "prop-types": "^15.7.2",
+        "style-loader": "^2.0.0",
+        "ts-loader": "^8.0.7",
+        "typescript": "^4.0.5",
+        "web-vitals": "^0.2.4"
+    },
+    "dependencies": {
+        "@mx-design/cli": "^0.0.53",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "peerDependencies": {
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "sideEffects": [
+        "*.css",
+        "*.less"
+    ]
+}

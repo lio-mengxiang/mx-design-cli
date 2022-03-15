@@ -1,0 +1,33 @@
+@import "../app.less";
+
+.@{zswui-prefix}-input{
+	cursor: text;
+	display: inline-block;
+	color: @text-color;
+	font-family: @font-family;
+	font-size: @font-size;
+	border-radius: @borderRadius;
+	line-height: @line-height;
+  	outline: none;
+    padding: 4px 15px;
+    border: 1px solid  #d9d9d9;
+    background-color: #fff;
+    transition: border 0.3s ease-in;
+    &:hover{
+        border: 1px solid  #2E94B9;
+	}
+	&:disabled{
+		cursor: not-allowed;
+		color: rgba(0, 0, 0, 0.25);
+	}
+}
+
+
+.@{zswui-prefix}-input-default{
+	color: @text-color;
+}
+
+.@{zswui-prefix}-input-primary{
+	color: @text-color;
+	border: 1px solid  #2E94B9;
+}

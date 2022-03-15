@@ -138,6 +138,7 @@ export const getBuildConfig = (): Configuration => {
       // 开启“多线程”，提高压缩效率
       parallel: true,
       exclude: /node_modules/,
+      extractComments: false,
     }),
     // 压缩css插件
     new CssMinimizerPlugin({

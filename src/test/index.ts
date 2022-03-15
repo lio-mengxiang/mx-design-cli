@@ -9,6 +9,5 @@ export const runTest = (commander) => {
     .option("-u, --update-snapshot", "是否更新快照")
     .option("-c, --coverage", "是否生成覆盖率报告")
     .option("-w, --watch", "是否只测试改动的文件")
-    .option("-s, --setupFilesAfterEnv <file>", "测试前装载的脚本文件")
     .action(test);
 };

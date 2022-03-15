@@ -8,7 +8,7 @@ export const buildLib = (commander) => {
   commander
     .command(BUILD_LIB)
     .description("打包编译仓库")
-    .option("-a, --analyzerUmd", "是否启用分析器")
+    .option("-a, --analyzerUmd", "是否启用webpack打包分析器")
     .option("-e, --entry <path>", "umd打包路径入口文件", "./src/index")
     .option("--output-name <name>", "打包Umd格式后对外暴露的名称")
     .option("--entry-dir <path>", "cjs和esm打包路径入口目录", "./src")
