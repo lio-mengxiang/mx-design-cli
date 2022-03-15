@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import { PREFIX } from "../_util";
 
 console.log("card");
 
 class Card extends Component {
+  props: { onChange: any; children: any };
   constructor(props) {
     super(props);
   }
@@ -18,21 +18,10 @@ class Card extends Component {
   };
 
   render() {
-    const { type, onClick, children } = this.props;
-    const cls = classNames(`${PREFIX}-card`, `${PREFIX}-card-${type}`);
+    const cls = classNames(`${PREFIX}-card`);
 
-    return <div className={cls}>{children}</div>;
+    return <div className={cls}>{this.props.children}</div>;
   }
 }
-
-// 指定 props 的默认值：
-Card.defaultProps = {
-  type: "default",
-};
-
-Card.propTypes = {
-  type: PropTypes.string,
-  onClick: PropTypes.func,
-};
 
 export default Card;

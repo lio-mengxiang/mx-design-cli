@@ -130,14 +130,15 @@ build 业务代码更简单
   }
 ```
 
-打包组件库命令行如下（以下是建议的配置）：
+打包组件库命令行如下（以下是建议的配置，命令行输入 npm/yarn run build 即可）：
 
 ```javascript
  "scripts": {
-    "buildCjs": "mx buildLib --mode cjs --less-2-css --copy-less",
-    "buildEsm": "mx buildLib --mode esm --less-2-css --copy-less",
-    "buildUmd": "mx buildLib --mode umd",
-    "build": "npm run buildCjs && npm run buildEsm && npm run buildUmd"
+   "build:types": "rimraf types && tsc --outDir types -d --emitDeclarationOnly",
+    "build:es": "rimraf esm && mx buildLib --mode esm --entry-dir ./components --less-2-css --copy-less",
+    "build:cjs": "rimraf lib && mx buildLib --mode cjs --entry-dir ./components --less-2-css --copy-less",
+    "build:umd": "rimraf dist && mx buildLib --mode umd --entry ./components/index",
+    "build": "yarn build:types && yarn build:cjs && yarn build:es && yarn build:umd",
   }
 ```
 

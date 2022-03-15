@@ -1,10 +1,10 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   entries: {
     index: {
-      entry: ['./src/index.js'],
-      template: './public/index.html',
+      entry: ["./src/index.tsx"],
+      template: "./public/index.html",
       // favicon: './favicon.ico',
     },
     // demo: {

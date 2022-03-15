@@ -5,6 +5,7 @@ lib/
 types/
 coverage/
 .vscode
+yarn.lock
 
 # General
 .DS_Store

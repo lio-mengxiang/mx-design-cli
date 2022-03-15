@@ -1,12 +1,19 @@
 {
     "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "noImplicitAny": true,
+      "baseUrl": "./",
+      "target": "ES2019",
       "module": "es6",
-      "target": "es5",
+      "moduleResolution": "node",
+      "lib": ["es5", "dom"],
+      "importHelpers": true,
       "jsx": "react",
-      "allowJs": true,
+      "resolveJsonModule": true,
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
       "types": ["webpack", "node", "jest"]
-    }
-}
+    },
+    "include": ["src", "components"],
+    "exclude": ["node_modules", "lib", "es", "**/__tests__/**", "tests"]
+  }
+  
