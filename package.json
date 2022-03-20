@@ -1,10 +1,12 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
-    "react"
+    "react cli",
+    "webpack pack cli",
+    "react library pack cli"
   ],
   "license": "MIT",
   "author": "1334196450@qq.com",
@@ -18,7 +20,6 @@
     "types"
   ],
   "scripts": {
-    "a": "ts-node ./src/index.ts test",
     "clean": "rimraf types lib coverage",
     "test": "jest --config ./jest.config.j$s",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
@@ -96,5 +97,10 @@
     "@types/webpack": "4.41.26",
     "conventional-changelog-cli": "^2.2.2",
     "ts-node": "10.5.0"
-  }
+  },
+    "browserslist": [
+    "chrome 49",
+    "Firefox 45",
+    "safari 10"
+  ]
 }
