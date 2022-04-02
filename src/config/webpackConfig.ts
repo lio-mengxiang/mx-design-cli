@@ -58,13 +58,16 @@ const baseConfig: Configuration = {
         test: /\.(less)$/,
         use: [
           {
-            loader: require.resolve("css-loader"),
+            loader: "css-loader",
             options: {
               importLoaders: 2,
+              modules: {
+                localIdentName: "[local]-[hash:5]",
+              },
             },
           },
           {
-            loader: require.resolve("postcss-loader"),
+            loader: "postcss-loader",
             options: {
               plugins: [
                 require("postcss-flexbugs-fixes"),
@@ -97,8 +100,12 @@ const baseConfig: Configuration = {
         },
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2?)$/,
+        test: /\.(eot|ttf|woff|woff2?)$/,
         type: "asset/resource",
+      },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack"],
       },
     ],
   },

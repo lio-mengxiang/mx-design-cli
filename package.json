@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -86,7 +86,8 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "@svgr/webpack": "^5.5.0"
   },
   "devDependencies": {
     "@mx-design/release": "0.0.42",
@@ -96,7 +97,7 @@
     "ts-node": "10.5.0"
   },
   "browserslist": [
-    "chrome 49",
+    "chrome 60",
     "Firefox 45",
     "safari 10"
   ]

@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/lio-mengxiang/mx-design-cli/compare/v1.0.4...v1.0.5) (2022-04-02)
+
+
+### Features
+
+* 删除无用包 ([f655b11](https://github.com/lio-mengxiang/mx-design-cli/commit/f655b1163071c9de271116a0fe87794804b96fe2))
+
+
+
 ## [1.0.4](https://github.com/lio-mengxiang/mx-design-cli/compare/v0.0.43...v1.0.4) (2022-03-25)
 
 
