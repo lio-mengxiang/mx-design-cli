@@ -1,9 +1,9 @@
 # Custom ignore
-build/
-dist/
-lib/
-types/
-coverage/
+/build
+/dist
+/lib
+/esm
+/types
 .vscode
 yarn.lock
 

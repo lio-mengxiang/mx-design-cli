@@ -90,7 +90,7 @@
     "@svgr/webpack": "^5.5.0"
   },
   "devDependencies": {
-    "@mx-design/release": "0.0.42",
+    "@mx-design/release": "2.2.17",
     "@types/node": "^15.3.0",
     "@types/webpack": "4.41.26",
     "conventional-changelog-cli": "^2.2.2",
