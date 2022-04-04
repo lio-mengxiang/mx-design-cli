@@ -1,3 +1,19 @@
+## [1.0.12](https://github.com/lio-mengxiang/mx-design-cli/compare/v1.0.8...v1.0.12) (2022-04-04)
+
+
+### Bug Fixes
+
+* less-loader ([dacaef1](https://github.com/lio-mengxiang/mx-design-cli/commit/dacaef185169dce6e38f90e89b894b0696f6134a))
+
+
+### Features
+
+* add ([b1826b9](https://github.com/lio-mengxiang/mx-design-cli/commit/b1826b988dbe29f4f349608722ac3cf35cfdef47))
+* add [@svger](https://github.com/svger) ([8a82bac](https://github.com/lio-mengxiang/mx-design-cli/commit/8a82bace6fd8def3f1fd5700355aa074a65c406d))
+* less-loader排除nodemodules ([078237a](https://github.com/lio-mengxiang/mx-design-cli/commit/078237a24214163f8db48774d57ef81a4f98d0ea))
+
+
+
 ## [1.0.8](https://github.com/lio-mengxiang/mx-design-cli/compare/v1.0.5...v1.0.8) (2022-04-04)
 
 

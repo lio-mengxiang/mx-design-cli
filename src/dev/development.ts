@@ -36,6 +36,7 @@ export default ({ host, port }: IDevelopmentConfig) => {
     compress: true,
     noInfo: true,
     hot: true,
+    historyApiFallback: true,
   };
   const runDevServer = async (port) => {
     const devServer = new WebpackDevServer(compiler, serverConfig);

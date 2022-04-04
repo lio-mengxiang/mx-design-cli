@@ -92,6 +92,40 @@ const baseConfig: Configuration = {
         ],
       },
       {
+        test: /\.(less)$/,
+        include: /node_modules/,
+        use: [
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: [
+                require("postcss-flexbugs-fixes"),
+                require("postcss-preset-env")({
+                  autoprefixer: {
+                    flexbox: "no-2009",
+                  },
+                  stage: 3,
+                }),
+              ],
+            },
+          },
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
+      {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         type: "asset",
         parser: {
@@ -190,6 +224,9 @@ const getDevConfig = (): Configuration => {
     require.resolve("react-refresh/babel")
   );
   ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift(
+    "style-loader"
+  );
+  ((config.module.rules[2] as RuleSetRule).use as RuleSetUseItem[]).unshift(
     "style-loader"
   );
   return config;
