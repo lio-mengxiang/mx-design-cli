@@ -56,6 +56,7 @@ const baseConfig: Configuration = {
       },
       {
         test: /\.(less)$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: "css-loader",
@@ -106,6 +107,7 @@ const baseConfig: Configuration = {
       {
         test: /\.svg$/,
         use: ["@svgr/webpack"],
+        exclude: /node_modules/,
       },
     ],
   },
