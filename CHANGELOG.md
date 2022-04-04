@@ -1,3 +1,16 @@
+## [1.0.8](https://github.com/lio-mengxiang/mx-design-cli/compare/v1.0.5...v1.0.8) (2022-04-04)
+
+
+### Features
+
+* 增加css module ([718ff99](https://github.com/lio-mengxiang/mx-design-cli/commit/718ff9982e0f94697e1e7e70948b4508ca85f0b5))
+* add svg ([a7e2488](https://github.com/lio-mengxiang/mx-design-cli/commit/a7e248834505c5253c7b6c50dbf406482d483aff))
+* update svg ([54319ca](https://github.com/lio-mengxiang/mx-design-cli/commit/54319ca54c82d75cbab5ab715863c8866220195b))
+* update svg loader ([febd166](https://github.com/lio-mengxiang/mx-design-cli/commit/febd166b06ab68bf17d6d0fdc905cf5fa2c08711))
+* upodate svg ([4c56033](https://github.com/lio-mengxiang/mx-design-cli/commit/4c5603377efac2e880125634d9d8c915c1860569))
+
+
+
 ## [1.0.7](https://github.com/lio-mengxiang/mx-design-cli/compare/v1.0.5...v1.0.7) (2022-04-04)
 
 
