@@ -1,12 +1,12 @@
-import path from "path";
-import fs from "fs";
-import { Configuration, RuleSetRule } from "webpack";
-import webpackMerge from "webpack-merge";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import chalk from "chalk";
-import util from "util";
-import child_process from "child_process";
+import path from 'path';
+import fs from 'fs';
+import { Configuration, RuleSetRule } from 'webpack';
+import webpackMerge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import chalk from 'chalk';
+import util from 'util';
+import child_process from 'child_process';
 
 // 同步函数链
 export const syncChainFns = (...fns) => {
@@ -17,29 +17,32 @@ export const syncChainFns = (...fns) => {
   };
 };
 
+// 获取项目文件
+export const getProjectPath = (dir = './'): string => {
+  return path.join(process.cwd(), dir);
+};
+
 export const isAddForkTsPlugin = (config) => {
-  if (fs.existsSync(getProjectPath("tsconfig.json"))) {
+  if (fs.existsSync(getProjectPath('tsconfig.json'))) {
     config.plugins.push(new ForkTsCheckerWebpackPlugin());
   }
   return config;
 };
 
-// 获取项目文件
-export const getProjectPath = (dir = "./"): string => {
-  return path.join(process.cwd(), dir);
-};
-
 export interface CustomConfig extends Configuration {
   entries: object;
   banner: string;
+  // eslint-disable-next-line no-unused-vars
   setBabelOptions: (options: string | { [index: string]: any }) => void;
-  setRules: (rules: Configuration["module"]["rules"]) => void;
-  setPlugins: (plugins: Configuration["plugins"]) => void;
+  // eslint-disable-next-line no-unused-vars
+  setRules: (rules: Configuration['module']['rules']) => void;
+  // eslint-disable-next-line no-unused-vars
+  setPlugins: (plugins: Configuration['plugins']) => void;
 }
 
 // 获取项目文件
 export const getCustomConfig = (
-  configFileName = "mx.config.js"
+  configFileName = 'mx.config.js'
 ): Partial<CustomConfig> => {
   const configPath = path.join(process.cwd(), configFileName);
   if (fs.existsSync(configPath)) {
@@ -71,7 +74,7 @@ export function getProjectConfig(config: Configuration): Configuration {
     const htmlWebpackPlugin = new HtmlWebpackPlugin({
       template: entries[key].template,
       filename: `${key}.html`,
-      chunks: ["manifest", key],
+      chunks: ['manifest', key],
       favicon: entries[key].favicon,
       inject: entries[key].inject !== false,
       minify: false,
@@ -111,7 +114,7 @@ export const run = async (command: string, info: string) => {
 export function compose(middleware, initOptions) {
   const otherOptions = initOptions || {};
   function dispatch(index) {
-    if (index == middleware.length) return;
+    if (index === middleware.length) return;
     const currMiddleware = middleware[index];
     return currMiddleware(() => dispatch(++index), otherOptions);
   }

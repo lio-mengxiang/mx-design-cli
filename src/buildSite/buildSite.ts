@@ -1,15 +1,15 @@
-import webpack from "webpack";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import getWebpackConfig from "../config/webpackConfig";
+import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import getWebpackConfig from '../config/webpackConfig';
 import {
   getProjectPath,
   getProjectConfig,
   syncChainFns,
   isAddForkTsPlugin,
   logger,
-} from "../utils";
-import { IDeployConfig } from "../interface";
-import { BUILD_SITE } from "../constants";
+} from '../utils';
+import { IDeployConfig } from '../interface';
+import { BUILD_SITE } from '../constants';
 
 export default ({ outDir, analyzer }: IDeployConfig) => {
   const config = syncChainFns(
@@ -22,7 +22,7 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
   if (analyzer) {
     config.plugins.push(
       new BundleAnalyzerPlugin({
-        analyzerMode: "static",
+        analyzerMode: 'static',
         generateStatsFile: true,
       })
     );
@@ -30,7 +30,7 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
 
   webpack(config).run((err) => {
     if (err) {
-      logger.error("webpackError: ", JSON.stringify(err));
+      logger.error('webpackError: ', JSON.stringify(err));
     }
   });
 };

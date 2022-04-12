@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -91,13 +91,15 @@
     "ts-node": "10.5.0"
   },
   "devDependencies": {
-    "@mx-design/release": "2.2.19",
-    "@types/node": "^15.3.0",
+    "@mx-design/release": "2.2.22",
     "@types/webpack": "4.41.26"
   },
   "browserslist": [
     "chrome 60",
     "Firefox 45",
     "safari 10"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }

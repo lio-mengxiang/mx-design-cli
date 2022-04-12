@@ -1,16 +1,16 @@
-import webpack from "webpack";
-import webpackMerge from "webpack-merge";
-import { copyLess, less2css, buildCjs, buildEsm } from "../config/gulpConfig";
-import getWebpackConfig from "../config/webpackConfig";
-import { getProjectPath, logger, run, compose } from "../utils";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from "../constants";
+import webpack from 'webpack';
+import webpackMerge from 'webpack-merge';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { copyLess, less2css, buildCjs, buildEsm } from '../config/gulpConfig';
+import getWebpackConfig from '../config/webpackConfig';
+import { getProjectPath, logger, compose } from '../utils';
+import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from '../constants';
 
-const { name } = require(getProjectPath("package.json"));
+const { name } = require(getProjectPath('package.json'));
 const checkName = (outputName, name) => {
-  if (!outputName && name?.includes("/")) {
+  if (!outputName && name?.includes('/')) {
     logger.warn(
-      "package.json的包名包含斜杠，webpack打包时会以斜杠来建立文件夹，所以请注意打包后文件名是否符合你的要求"
+      'package.json的包名包含斜杠，webpack打包时会以斜杠来建立文件夹，所以请注意打包后文件名是否符合你的要求'
     );
   }
 };
@@ -34,8 +34,8 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
         output: {
           path: getProjectPath(outDirUmd),
           library: realName,
-          libraryTarget: "umd",
-          libraryExport: "default",
+          libraryTarget: 'umd',
+          libraryExport: 'default',
         },
         plugins: customizePlugins,
       });
@@ -43,17 +43,17 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
       if (analyzerUmd) {
         config.plugins.push(
           new BundleAnalyzerPlugin({
-            analyzerMode: "static",
+            analyzerMode: 'static',
             generateStatsFile: true,
           })
         );
       }
       return webpack(config).run((err, stats) => {
         if (stats.compilation.errors?.length) {
-          console.log("webpackError: ", stats.compilation.errors);
+          console.log('webpackError: ', stats.compilation.errors);
         }
         if (err) {
-          logger.error("webpackError: ", JSON.stringify(err));
+          logger.error('webpackError: ', JSON.stringify(err));
           reject(err);
         } else {
           resolve(stats);
@@ -61,21 +61,21 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
       });
     });
   };
-  logger.info("building umd");
+  logger.info('building umd');
   await umdTask(BUILD_LIB);
-  logger.success("umd computed");
+  logger.success('umd computed');
 };
 
 const bulidLibFns = {
   [LESS_2_CSS]: async (next, otherOptions) => {
-    logger.info("less2css ing...");
+    logger.info('less2css ing...');
     await less2css({
       outDirCjs: otherOptions.outDirCjs,
       entryDir: otherOptions.entryDir,
       mode: otherOptions.mode,
       outDirEsm: otherOptions.outDirEsm,
     });
-    logger.success("less2css computed");
+    logger.success('less2css computed');
     next();
   },
   [UMD]: async (next, otherOptions) => {
@@ -88,34 +88,34 @@ const bulidLibFns = {
     next();
   },
   [COPY_LESS]: async (next, otherOptions) => {
-    logger.info("copyLess ing...");
+    logger.info('copyLess ing...');
     await copyLess({
       outDirCjs: otherOptions.outDirCjs,
       entryDir: otherOptions.entryDir,
       mode: otherOptions.mode,
       outDirEsm: otherOptions.outDirEsm,
     });
-    logger.success("copyLess computed");
+    logger.success('copyLess computed');
     next();
   },
   [CJS]: async (next, otherOptions) => {
-    logger.info("buildCJS ing...");
+    logger.info('buildCJS ing...');
     await buildCjs({
       mode: otherOptions.mode,
       outDirCjs: otherOptions.outDirCjs,
       entryDir: otherOptions.entryDir,
     });
-    logger.success("buildCJS computed");
+    logger.success('buildCJS computed');
     next();
   },
   [ESM]: async (next, otherOptions) => {
-    logger.info("buildESM ing...");
+    logger.info('buildESM ing...');
     await buildEsm({
       mode: otherOptions.mode,
       outDirEsm: otherOptions.outDirEsm,
       entryDir: otherOptions.entryDir,
     });
-    logger.success("buildESM computed");
+    logger.success('buildESM computed');
     next();
   },
 };

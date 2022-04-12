@@ -1,41 +1,41 @@
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import ReactRefreshPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import webpackMerge from "webpack-merge";
-import WebpackBar from "webpackbar";
-import webpack, { Configuration, RuleSetRule, RuleSetUseItem } from "webpack";
-import babelConfig from "./babelConfig/es";
-import { DEV, BUILD_LIB, BUILD_SITE } from "../constants";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin"; // 压缩css插件
-import TerserPlugin from "terser-webpack-plugin"; // 压缩代码
-import { IWebpackConfigType } from "../interface";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import webpackMerge from 'webpack-merge';
+import WebpackBar from 'webpackbar';
+import webpack, { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'; // 压缩css插件
+import TerserPlugin from 'terser-webpack-plugin'; // 压缩代码
+import babelConfig from './babelConfig/es';
+import { DEV, BUILD_LIB, BUILD_SITE } from '../constants';
+import { IWebpackConfigType } from '../interface';
 
 const baseConfig: Configuration = {
-  target: "web",
+  target: 'web',
   output: {
-    filename: "js/[name].js",
-    chunkFilename: "js/[name].[chunkhash:8].js",
-    assetModuleFilename: "asset/[name].[contenthash:8].[ext]",
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[name].[chunkhash:8].js',
+    assetModuleFilename: 'asset/[name].[contenthash:8].[ext]',
   },
   optimization: {
     runtimeChunk: true,
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
       cacheGroups: {
         reactBase: {
-          name: "reactBase",
-          chunks: "all",
+          name: 'reactBase',
+          chunks: 'all',
           test: /[\\/]node_modules[\\/](react|react-dom|@hot-loader|react-router|react-redux|react-router-dom)[\\/]/,
         },
-        "async-commons": {
+        'async-commons': {
           // 异步加载公共包、组件等
-          name: "async-commons",
-          chunks: "async",
+          name: 'async-commons',
+          chunks: 'async',
           test: /[\\/]node_modules[\\/]/,
           minChunks: 2,
           priority: 1,
         },
         default: {
-          name: "default",
+          name: 'default',
           priority: -20,
         },
       },
@@ -47,9 +47,9 @@ const baseConfig: Configuration = {
         test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: [
-          "thread-loader",
+          'thread-loader',
           {
-            loader: require.resolve("babel-loader"),
+            loader: require.resolve('babel-loader'),
             options: babelConfig,
           },
         ],
@@ -59,22 +59,22 @@ const baseConfig: Configuration = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               importLoaders: 2,
               modules: {
-                localIdentName: "[local]-[hash:5]",
+                localIdentName: '[local]-[hash:5]',
               },
             },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               plugins: [
-                require("postcss-flexbugs-fixes"),
-                require("postcss-preset-env")({
+                require('postcss-flexbugs-fixes'),
+                require('postcss-preset-env')({
                   autoprefixer: {
-                    flexbox: "no-2009",
+                    flexbox: 'no-2009',
                   },
                   stage: 3,
                 }),
@@ -82,7 +82,7 @@ const baseConfig: Configuration = {
             },
           },
           {
-            loader: "less-loader",
+            loader: 'less-loader',
             options: {
               lessOptions: {
                 javascriptEnabled: true,
@@ -96,19 +96,19 @@ const baseConfig: Configuration = {
         include: /node_modules/,
         use: [
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               importLoaders: 2,
             },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               plugins: [
-                require("postcss-flexbugs-fixes"),
-                require("postcss-preset-env")({
+                require('postcss-flexbugs-fixes'),
+                require('postcss-preset-env')({
                   autoprefixer: {
-                    flexbox: "no-2009",
+                    flexbox: 'no-2009',
                   },
                   stage: 3,
                 }),
@@ -116,7 +116,7 @@ const baseConfig: Configuration = {
             },
           },
           {
-            loader: "less-loader",
+            loader: 'less-loader',
             options: {
               lessOptions: {
                 javascriptEnabled: true,
@@ -127,7 +127,7 @@ const baseConfig: Configuration = {
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        type: "asset",
+        type: 'asset',
         parser: {
           dataUrlCondition: {
             maxSize: 4 * 1024,
@@ -136,34 +136,34 @@ const baseConfig: Configuration = {
       },
       {
         test: /\.(eot|ttf|woff|woff2?)$/,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
       {
         test: /\.svg$/,
-        use: ["@svgr/webpack"],
+        use: ['@svgr/webpack'],
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [" ", ".ts", ".tsx", ".js", ".jsx", ".less", ".svg"],
+    extensions: [' ', '.ts', '.tsx', '.js', '.jsx', '.less', '.svg'],
   },
   plugins: [new WebpackBar({})],
 };
 
 export const getBuildConfig = (): Configuration => {
-  let config: Configuration = webpackMerge({}, baseConfig, {
-    mode: "production",
-    devtool: "hidden-source-map",
+  const config: Configuration = webpackMerge({}, baseConfig, {
+    mode: 'production',
+    devtool: 'hidden-source-map',
     output: {
-      filename: "js/[name].js",
-      chunkFilename: "js/[name].[chunkhash:8].js",
-      publicPath: "./",
+      filename: 'js/[name].js',
+      chunkFilename: 'js/[name].[chunkhash:8].js',
+      publicPath: './',
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: "stylesheet/[name].[contenthash:8].css",
-        chunkFilename: "stylesheet/[id].[contenthash:8].css",
+        filename: 'stylesheet/[name].[contenthash:8].css',
+        chunkFilename: 'stylesheet/[id].[contenthash:8].css',
       }),
     ],
   });
@@ -171,7 +171,7 @@ export const getBuildConfig = (): Configuration => {
   ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift({
     loader: MiniCssExtractPlugin.loader,
     options: {
-      publicPath: "../",
+      publicPath: '../',
     },
   });
 
@@ -187,7 +187,7 @@ export const getBuildConfig = (): Configuration => {
     new CssMinimizerPlugin({
       minimizerOptions: {
         preset: [
-          "default",
+          'default',
           {
             discardComments: { removeAll: true },
           },
@@ -199,11 +199,11 @@ export const getBuildConfig = (): Configuration => {
 };
 
 const getDevConfig = (): Configuration => {
-  let config = webpackMerge({}, baseConfig, {
-    mode: "development",
-    devtool: "eval-cheap-source-map",
+  const config = webpackMerge({}, baseConfig, {
+    mode: 'development',
+    devtool: 'eval-cheap-source-map',
     output: {
-      publicPath: "/",
+      publicPath: '/',
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
@@ -213,7 +213,7 @@ const getDevConfig = (): Configuration => {
       minimize: false,
     },
     cache: {
-      type: "filesystem",
+      type: 'filesystem',
       buildDependencies: {
         config: [__filename],
       },
@@ -221,13 +221,13 @@ const getDevConfig = (): Configuration => {
   });
 
   (config.module.rules[0] as RuleSetRule).use[1].options.plugins.push(
-    require.resolve("react-refresh/babel")
+    require.resolve('react-refresh/babel')
   );
   ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift(
-    "style-loader"
+    'style-loader'
   );
   ((config.module.rules[2] as RuleSetRule).use as RuleSetUseItem[]).unshift(
-    "style-loader"
+    'style-loader'
   );
   return config;
 };

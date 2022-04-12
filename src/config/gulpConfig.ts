@@ -1,13 +1,13 @@
-import gulp from "gulp";
-import babel from "gulp-babel";
-import less from "gulp-less";
-import autoprefixer from "gulp-autoprefixer";
-import cssnano from "gulp-cssnano";
-import through2 from "through2";
-import babelEsConfig from "./babelConfig/es";
-import babelCjsConfig from "./babelConfig/lib";
-import { getProjectPath } from "../utils";
-import { CJS, ESM, LIB } from "../constants";
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import less from 'gulp-less';
+import autoprefixer from 'gulp-autoprefixer';
+import cssnano from 'gulp-cssnano';
+import through2 from 'through2';
+import babelEsConfig from './babelConfig/es';
+import babelCjsConfig from './babelConfig/lib';
+import { getProjectPath } from '../utils';
+import { CJS, ESM, LIB } from '../constants';
 
 const paths = {
   dest: {
@@ -28,10 +28,13 @@ const paths = {
  * @param {string} content
  */
 function cssInjection(content) {
-  return content
-    .replace(/\/style\/?'/g, "/style/css'")
-    .replace(/\/style\/?"/g, '/style/css"')
-    .replace(/\.less/g, ".css");
+  return (
+    content
+      // eslint-disable-next-line quotes
+      .replace(/\/style\/?'/g, "/style/css'")
+      .replace(/\/style\/?"/g, '/style/css"')
+      .replace(/\.less/g, '.css')
+  );
 }
 
 /**
@@ -52,7 +55,7 @@ function compileScripts(mode, destDir, newEntryDir) {
         if (file.path.match(/(\/|\\)style(\/|\\)index\.js/)) {
           const content = file.contents.toString(encoding);
           file.contents = Buffer.from(cssInjection(content)); // 处理文件内容
-          file.path = file.path.replace(/index\.js/, "css.js"); // 文件重命名
+          file.path = file.path.replace(/index\.js/, 'css.js'); // 文件重命名
           this.push(file); // 新增该文件
           next();
         } else {
@@ -63,12 +66,17 @@ function compileScripts(mode, destDir, newEntryDir) {
     .pipe(gulp.dest(destDir));
 }
 
+const getNewEntryDir = (entryDir) =>
+  entryDir?.[entryDir.length - 1] === '/'
+    ? entryDir.slice(0, entryDir.length - 1)
+    : entryDir;
+
 const copyLess = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
   const newEntryDir = getNewEntryDir(entryDir);
   /**
    * 拷贝less文件
    */
-  gulp.task("copyLess", () => {
+  gulp.task('copyLess', () => {
     const source = gulp.src(paths.styles(newEntryDir));
     if (mode === CJS) {
       source.pipe(gulp.dest(outDirCjs));
@@ -80,23 +88,18 @@ const copyLess = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
   });
 
   return new Promise((res) => {
-    return gulp.series("copyLess", () => {
+    return gulp.series('copyLess', () => {
       res(true);
     })();
   });
 };
-
-const getNewEntryDir = (entryDir) =>
-  entryDir?.[entryDir.length - 1] === "/"
-    ? entryDir.slice(0, entryDir.length - 1)
-    : entryDir;
 
 const less2css = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
   const newEntryDir = getNewEntryDir(entryDir);
   /**
    * 生成css文件
    */
-  gulp.task("less2css", () => {
+  gulp.task('less2css', () => {
     const source = gulp
       .src(paths.styles(newEntryDir))
       .pipe(less()) // 处理less文件
@@ -112,7 +115,7 @@ const less2css = ({ entryDir, outDirCjs, outDirEsm, mode }) => {
   });
 
   return new Promise((res) => {
-    return gulp.series("less2css", () => {
+    return gulp.series('less2css', () => {
       res(true);
     })();
   });
@@ -122,12 +125,12 @@ const buildCjs = ({ mode, outDirCjs, entryDir }) => {
   /**
    * 编译cjs
    */
-  gulp.task("compileCJS", () => {
+  gulp.task('compileCJS', () => {
     return compileScripts(mode, outDirCjs, newEntryDir);
   });
 
   return new Promise((res) => {
-    return gulp.series("compileCJS", () => {
+    return gulp.series('compileCJS', () => {
       res(true);
     })();
   });
@@ -138,12 +141,12 @@ const buildEsm = ({ mode, outDirEsm, entryDir }) => {
   /**
    * 编译esm
    */
-  gulp.task("compileESM", () => {
+  gulp.task('compileESM', () => {
     return compileScripts(mode, outDirEsm, newEntryDir);
   });
 
   return new Promise((res) => {
-    return gulp.series("compileESM", () => {
+    return gulp.series('compileESM', () => {
       res(true);
     })();
   });

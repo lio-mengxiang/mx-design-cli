@@ -3,7 +3,7 @@ export interface IDevelopmentConfig {
   port: number;
 }
 
-export type IWebpackConfigType = "buildLib" | "dev" | "buildSite";
+export type IWebpackConfigType = 'buildLib' | 'dev' | 'buildSite';
 
 export interface IDeployConfig {
   outDir: string;

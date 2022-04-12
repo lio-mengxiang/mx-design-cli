@@ -1,10 +1,10 @@
-import webpack from "webpack";
-import WebpackDevServer from "webpack-dev-server";
-import getWebpackConfig from "../config/webpackConfig";
-import { isAddForkTsPlugin, syncChainFns, getProjectConfig } from "../utils";
-import { DEV } from "../constants";
-import { IDevelopmentConfig } from "../interface";
-import detect from "detect-port-alt";
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import detect from 'detect-port-alt';
+import getWebpackConfig from '../config/webpackConfig';
+import { isAddForkTsPlugin, syncChainFns, getProjectConfig } from '../utils';
+import { DEV } from '../constants';
+import { IDevelopmentConfig } from '../interface';
 
 const isInteractive = process.stdout.isTTY;
 
@@ -32,15 +32,16 @@ export default ({ host, port }: IDevelopmentConfig) => {
   )(DEV);
 
   const serverConfig = {
-    publicPath: "/",
+    publicPath: '/',
     compress: true,
     noInfo: true,
     hot: true,
     historyApiFallback: true,
+    open: true,
   };
-  const runDevServer = async (port) => {
+  const runDevServer = async (_port) => {
     const devServer = new WebpackDevServer(compiler, serverConfig);
-    const resPort = await choosePort(port, host);
+    const resPort = await choosePort(_port, host);
     if (resPort !== null) {
       devServer.listen(resPort, host, (err) => {
         if (err) {
