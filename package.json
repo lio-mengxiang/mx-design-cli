@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
     "mx-cli",
@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "author": "1334196450@qq.com",
-  "typings": "types/index.d.ts",
+  "typings": "types/src/index.d.ts",
   "bin": {
     "mx": "./bin/index.js"
   },
