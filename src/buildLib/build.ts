@@ -7,6 +7,7 @@ import { getProjectPath, logger, compose } from '../utils';
 import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from '../constants';
 
 const { name } = require(getProjectPath('package.json'));
+
 const checkName = (outputName, name) => {
   if (!outputName && name?.includes('/')) {
     logger.warn(
