@@ -148,7 +148,12 @@ const baseConfig: Configuration = {
   resolve: {
     extensions: [' ', '.ts', '.tsx', '.js', '.jsx', '.less', '.svg'],
   },
-  plugins: [new WebpackBar({})],
+  plugins: [
+    new WebpackBar({}),
+    new webpack.DefinePlugin({
+      'process.env.CUS_ENV': process.env.CUS_ENV,
+    }),
+  ],
 };
 
 export const getBuildConfig = (): Configuration => {
