@@ -151,7 +151,7 @@ const baseConfig: Configuration = {
   plugins: [
     new WebpackBar({}),
     new webpack.DefinePlugin({
-      CUS_ENV: process.env.CUS_ENV,
+      NODE_ENV: process.env.CUS_ENV,
     }),
   ],
 };
