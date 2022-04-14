@@ -126,6 +126,32 @@ const baseConfig: Configuration = {
         ],
       },
       {
+        test: /\.(css)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('postcss-flexbugs-fixes'),
+                require('postcss-preset-env')({
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }),
+              ],
+            },
+          },
+        ],
+      },
+      {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         type: 'asset',
         parser: {
@@ -180,6 +206,12 @@ export const getBuildConfig = (): Configuration => {
     },
   });
 
+  ((config.module.rules[3] as RuleSetRule).use as RuleSetUseItem[]).unshift({
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+      publicPath: '../',
+    },
+  });
   config.optimization.minimizer = [
     // 压缩js文件
     new TerserPlugin({
@@ -232,6 +264,9 @@ const getDevConfig = (): Configuration => {
     'style-loader'
   );
   ((config.module.rules[2] as RuleSetRule).use as RuleSetUseItem[]).unshift(
+    'style-loader'
+  );
+  ((config.module.rules[3] as RuleSetRule).use as RuleSetUseItem[]).unshift(
     'style-loader'
   );
   return config;
