@@ -189,7 +189,7 @@ export const getBuildConfig = (): Configuration => {
     output: {
       filename: 'js/[name].js',
       chunkFilename: 'js/[name].[chunkhash:8].js',
-      publicPath: './',
+      publicPath: '/',
     },
     plugins: [
       new MiniCssExtractPlugin({
