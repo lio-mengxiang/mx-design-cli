@@ -177,8 +177,7 @@ const baseConfig: Configuration = {
   plugins: [
     new WebpackBar({}),
     new webpack.DefinePlugin({
-      NODE_ENV: process.env.NODE_ENV,
-      LOCAL_ENV: process.env.LOCAL_ENV,
+      'process.env': process.env,
     }),
   ],
 };
