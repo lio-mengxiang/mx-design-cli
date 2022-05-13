@@ -177,7 +177,7 @@ const baseConfig: Configuration = {
   plugins: [
     new WebpackBar({}),
     new webpack.DefinePlugin({
-      'process.env': process.env,
+      'process.env': JSON.stringify(process.env),
     }),
   ],
 };
