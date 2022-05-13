@@ -38,6 +38,7 @@ export interface CustomConfig extends Configuration {
   setRules: (rules: Configuration['module']['rules']) => void;
   // eslint-disable-next-line no-unused-vars
   setPlugins: (plugins: Configuration['plugins']) => void;
+  setDevOptions: Record<string, any>;
 }
 
 // 获取项目文件

@@ -2,7 +2,12 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import detect from 'detect-port-alt';
 import getWebpackConfig from '../config/webpackConfig';
-import { isAddForkTsPlugin, syncChainFns, getProjectConfig } from '../utils';
+import {
+  isAddForkTsPlugin,
+  syncChainFns,
+  getProjectConfig,
+  getCustomConfig,
+} from '../utils';
 import { DEV } from '../constants';
 import { IDevelopmentConfig } from '../interface';
 
@@ -30,7 +35,7 @@ export default ({ host, port }: IDevelopmentConfig) => {
     isAddForkTsPlugin,
     webpack
   )(DEV);
-
+  const { setDevOptions } = getCustomConfig();
   const serverConfig = {
     publicPath: '/',
     compress: true,
@@ -38,6 +43,7 @@ export default ({ host, port }: IDevelopmentConfig) => {
     hot: true,
     historyApiFallback: true,
     open: true,
+    ...setDevOptions,
   };
   const runDevServer = async (_port) => {
     const devServer = new WebpackDevServer(compiler, serverConfig);
