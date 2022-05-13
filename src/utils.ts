@@ -59,6 +59,7 @@ export function getProjectConfig(config: Configuration): Configuration {
     banner,
     setRules,
     setPlugins,
+    setDevOptions,
     ...webpackConfig
   } = getCustomConfig();
 
