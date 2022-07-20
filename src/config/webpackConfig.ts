@@ -34,10 +34,6 @@ const baseConfig: Configuration = {
           minChunks: 2,
           priority: 1,
         },
-        default: {
-          name: 'default',
-          priority: -20,
-        },
       },
     },
   },
