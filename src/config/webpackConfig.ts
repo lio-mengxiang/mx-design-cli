@@ -19,6 +19,7 @@ const baseConfig: Configuration = {
   optimization: {
     runtimeChunk: true,
     splitChunks: {
+      minChunks: 2,
       chunks: 'all',
       cacheGroups: {
         reactBase: {
