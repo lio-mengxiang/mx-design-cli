@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "repository": "https://github.com/lio-mengxiang/mx-design-cli.git",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "clean": "rimraf types lib coverage",
-    "test": "jest --config ./jest.config.j$s",
+    "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
     "build:types": "rimraf types && tsc --outDir types -d --emitDeclarationOnly",
     "build:lib": "rimraf lib && babel src --extensions .ts --out-dir lib --copy-files",
@@ -43,7 +43,7 @@
     "@babel/runtime-corejs3": "^7.13.10",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.4",
     "@types/jest": "27.4.1",
-    "babel-jest": "^26.5.2",
+    "babel-jest": "^28.1.3",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
@@ -61,7 +61,7 @@
     "gulp-less": "^5.0.0",
     "html-webpack-plugin": "^5.3.1",
     "inquirer": "8.2.0",
-    "jest": "^26.5.3",
+    "jest": "^28.1.3",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^1.6.0",
@@ -80,7 +80,7 @@
     "terser-webpack-plugin": "^5.1.2",
     "thread-loader": "3.0.4",
     "through2": "^3.0.1",
-    "ts-jest": "^26.5.0",
+    "ts-jest": "^28.0.7",
     "typescript": "^4.5.4",
     "webpack": "^5.37.0",
     "webpack-bundle-analyzer": "^4.4.2",
