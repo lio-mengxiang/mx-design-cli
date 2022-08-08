@@ -235,7 +235,7 @@ export const getBuildConfig = (): Configuration => {
 const getDevConfig = (): Configuration => {
   const config = webpackMerge({}, baseConfig, {
     mode: 'development',
-    devtool: 'eval-cheap-source-map',
+    devtool: 'source-map',
     output: {
       publicPath: '/',
     },
