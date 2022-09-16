@@ -1,9 +1,17 @@
 import execa from 'execa';
 import path from 'path';
+import { getProjectPath } from 'src/utils';
+import fs from 'fs';
 import { ITestConfig } from '../interface';
 
+const getTestConfig = () => {
+  return (
+    fs.existsSync(getProjectPath('test.config.js')) ||
+    path.join(__dirname, '../config/jestConfig/index.js')
+  );
+};
 export default ({ updateSnapshot, coverage, watch }: Partial<ITestConfig>) => {
-  const configFile = path.join(__dirname, '../config/jestConfig/index.js');
+  const configFile = getTestConfig();
   const args = [require.resolve('jest/bin/jest'), `--config=${configFile}`];
   updateSnapshot && args.push('-u');
   coverage && args.push('--coverage');

@@ -41,6 +41,8 @@ export interface CustomConfig extends Configuration {
   setDevOptions: Record<string, any>;
   // eslint-disable-next-line no-unused-vars
   setOutput: (outputConfig: any) => void;
+  // eslint-disable-next-line no-unused-vars
+  setConfig: (config: any) => void;
 }
 
 // 获取项目文件
@@ -63,6 +65,7 @@ export function getProjectConfig(config: Configuration): Configuration {
     setPlugins,
     setDevOptions,
     setOutput,
+    setConfig,
     ...webpackConfig
   } = getCustomConfig();
 
@@ -72,6 +75,7 @@ export function getProjectConfig(config: Configuration): Configuration {
   setBabelOptions?.((config.module.rules[0] as RuleSetRule).use[1].options);
   setRules?.(config.module.rules);
   setPlugins?.(config.plugins);
+  setConfig?.(config);
 
   Object.keys(entries || {}).forEach((key) => {
     if (entries[key].entry) {

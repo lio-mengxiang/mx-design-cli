@@ -11,7 +11,6 @@ module.exports = {
   ],
   collectCoverageFrom: [
     `<rootDir>/**/*${fileName}`,
-    `!<rootDir>/*/PropsType${fileName}`,
     `!<rootDir>/**/style/*${fileName}`,
     '!<rootDir>/style/**/*',
     '!<rootDir>/**/__tests__/*',

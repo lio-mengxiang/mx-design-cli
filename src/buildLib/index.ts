@@ -17,6 +17,6 @@ export const buildLib = (commander) => {
     .option('--out-dir-cjs <path>', '输出cjs格式的目录', './lib')
     .option('--copy-less', '拷贝不参与编译的文件')
     .option('--less-2-css', '是否编译组件样式')
-    .option('-m, --mode <esm|umd|cjs>', '打包模式 目前支持umd和esm两种')
+    .option('-m, --mode <esm|umd|cjs>', '打包模式 目前支持umd、esm和cjs')
     .action(build);
 };

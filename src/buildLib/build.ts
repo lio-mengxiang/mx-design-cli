@@ -15,6 +15,7 @@ const checkName = (outputName, name) => {
     );
   }
 };
+
 /**
  * build for umd
  * @param analyzer 是否启用分析包插件
