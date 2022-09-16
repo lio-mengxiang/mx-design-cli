@@ -17,7 +17,7 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
     getProjectConfig,
     isAddForkTsPlugin
   )(BUILD_SITE);
-  config.output.path = getProjectPath(outDir);
+  config.output.path = config.output.path || getProjectPath(outDir);
 
   if (analyzer) {
     config.plugins.push(
