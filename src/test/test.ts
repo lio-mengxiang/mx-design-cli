@@ -1,7 +1,7 @@
 import execa from 'execa';
 import path from 'path';
-import { getProjectPath } from 'src/utils';
 import fs from 'fs';
+import { getProjectPath } from '../utils';
 import { ITestConfig } from '../interface';
 
 const getTestConfig = () => {
