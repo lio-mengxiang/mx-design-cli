@@ -4,7 +4,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { copyLess, less2css, buildCjs, buildEsm } from '../config/gulpConfig';
 import getWebpackConfig from '../config/webpackConfig';
 import { getProjectPath, logger, compose } from '../utils';
-import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from '../constants';
+import { CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from '../constants';
 
 const { name } = require(getProjectPath('package.json'));
 
@@ -27,9 +27,9 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
   const customizePlugins = [];
   const realName = outputName || name;
   checkName(outputName, name);
-  const umdTask = (type) => {
+  const umdTask = () => {
     return new Promise((resolve, reject) => {
-      const config = webpackMerge(getWebpackConfig(type), {
+      const config = webpackMerge(getWebpackConfig(), {
         entry: {
           [realName]: getProjectPath(entry),
         },
@@ -64,7 +64,7 @@ const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
     });
   };
   logger.info('building umd');
-  await umdTask(BUILD_LIB);
+  await umdTask();
   logger.success('umd computed');
 };
 
