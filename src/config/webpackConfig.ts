@@ -1,13 +1,10 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import webpack, { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'; // 压缩css插件
 import TerserPlugin from 'terser-webpack-plugin'; // 压缩代码
 import babelConfig from './babelConfig/es';
-import { DEV, BUILD_LIB, BUILD_SITE } from '../constants';
-import { IWebpackConfigType } from '../interface';
 
 const baseConfig: Configuration = {
   target: 'web',
@@ -68,7 +65,6 @@ const baseConfig: Configuration = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('postcss-flexbugs-fixes'),
                 require('postcss-preset-env')({
                   autoprefixer: {
                     flexbox: 'no-2009',
@@ -232,57 +228,8 @@ export const getBuildConfig = (): Configuration => {
   return config;
 };
 
-const getDevConfig = (): Configuration => {
-  const config = webpackMerge({}, baseConfig, {
-    mode: 'development',
-    devtool: 'source-map',
-    output: {
-      publicPath: '/',
-    },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new ReactRefreshPlugin(),
-    ],
-    optimization: {
-      minimize: false,
-    },
-    cache: {
-      type: 'filesystem',
-      buildDependencies: {
-        config: [__filename],
-      },
-    },
-  });
-
-  (config.module.rules[0] as RuleSetRule).use[1].options.plugins.push(
-    require.resolve('react-refresh/babel')
-  );
-  ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift(
-    'style-loader'
-  );
-  ((config.module.rules[2] as RuleSetRule).use as RuleSetUseItem[]).unshift(
-    'style-loader'
-  );
-  ((config.module.rules[3] as RuleSetRule).use as RuleSetUseItem[]).unshift(
-    'style-loader'
-  );
-  return config;
-};
-
-const getWebpackConfig = (type?: IWebpackConfigType): Configuration => {
-  switch (type) {
-    case DEV:
-      return getDevConfig();
-
-    case BUILD_SITE:
-      return getBuildConfig();
-
-    case BUILD_LIB:
-      return getBuildConfig();
-
-    default:
-      return getDevConfig();
-  }
+const getWebpackConfig = (): Configuration => {
+  return getBuildConfig();
 };
 
 export default getWebpackConfig;

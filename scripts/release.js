@@ -1,4 +1,4 @@
-import {
+const {
   getNextVersion,
   gitPush,
   build,
@@ -6,7 +6,7 @@ import {
   updateVersion,
   compose,
   eslint,
-} from '@mx-design/release';
+} = require('@mx-design/release');
 
 const middle = [
   eslint(),

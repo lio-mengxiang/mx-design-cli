@@ -1,0 +1,41 @@
+﻿{
+  "compilerOptions": {
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "outDir": "lib",
+    "declaration": true,
+    "sourceMap": true,
+    "lib": ["esnext", "dom"],
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": "./",
+    "paths": {
+      "tdesign-react": ["src"],
+      "tdesign-react/*": ["src/*"],
+      "@test/utils": ["test/utils"],
+      "@common/*": ["src/_common/*"]
+    },
+    "allowJs": true,
+    "checkJs": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true
+  },
+  "types": [
+    "node",
+  ],
+  "include": ["./src", "./globals.d.ts"],
+  "exclude": [
+    "**/**/__tests__/*",
+    "node_modules",
+    "dist",
+    "lib",
+    "esm",
+    "cjs",
+    "es"
+  ],
+  "compileOnSave": false
+}

@@ -56,6 +56,15 @@ export const getCustomConfig = (
   return {};
 };
 
+// 获取项目文件
+export const getViteConfig = (configFileName = 'mx.vite.config.js') => {
+  const configPath = path.join(process.cwd(), configFileName);
+  if (fs.existsSync(configPath)) {
+    return require(configPath);
+  }
+  return null;
+};
+
 export function getProjectConfig(config: Configuration): Configuration {
   const {
     entries,
