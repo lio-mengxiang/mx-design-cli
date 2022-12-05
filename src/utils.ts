@@ -60,7 +60,7 @@ export const getCustomConfig = (
 export const getViteConfig = (configFileName = 'mx.vite.config.js') => {
   const configPath = path.join(process.cwd(), configFileName);
   if (fs.existsSync(configPath)) {
-    return require(configPath);
+    return configPath;
   }
   return null;
 };
