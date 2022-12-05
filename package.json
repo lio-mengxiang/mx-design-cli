@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "repository": "https://github.com/lio-mengxiang/mx-design-cli.git",
   "description": "Help you start quickly and package react projects",
   "keywords": [
