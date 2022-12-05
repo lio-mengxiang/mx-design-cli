@@ -1,12 +1,13 @@
 import { createServer } from 'vite';
+import path from 'path';
 import { getViteConfig } from '../utils';
-import viteConfig from '../config/vite.config.js';
 
 export default async () => {
   const server = await createServer({
-    configFile: getViteConfig() || viteConfig,
+    configFile:
+      getViteConfig() || path.join(__dirname, '../config/vite.config.js'),
     root: process.cwd(),
   });
-  server.listen();
+  await server.listen();
   server.printUrls();
 };
