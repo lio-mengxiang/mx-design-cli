@@ -10,3 +10,11 @@ export const LIB = 'lib';
 export const UMD = 'umd';
 export const LESS_2_CSS = 'less2Css';
 export const COPY_LESS = 'copyLess';
+
+export const inputList = [
+  'src/**/*.ts',
+  'src/**/*.js',
+  'src/**/*.jsx',
+  'src/**/*.tsx',
+  '!src/**/__tests__',
+];
