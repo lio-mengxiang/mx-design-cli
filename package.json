@@ -18,6 +18,7 @@
     "mx": "./bin/index.js"
   },
   "files": [
+    "esm",
     "lib",
     "bin",
     "types"
