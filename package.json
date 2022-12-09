@@ -28,9 +28,9 @@
     "test": "jest --config ./jest.config.js",
     "coverage": "rimraf coverage && jest --config ./jest.config.js --coverage",
     "build:types": "rimraf types && tsc",
-    "build:lib": "rimraf lib && babel src --extensions .ts --out-dir lib --copy-files'",
-    "build:esm": "rimraf lib && babel src --config-file ./babel.config.es.js --extensions .ts --out-dir esm --copy-files --ignore '**/__test__'",
-    "build": "yarn build:types && yarn build:lib && yarn build:esm",
+    "build:lib": "rimraf lib && babel src --extensions .ts --out-dir lib --copy-files",
+    "build:esm": "rimraf lib && babel src --config-file ./babel.config.es.js --extensions .ts --out-dir esm --copy-files",
+    "build": "pnpm build:types & pnpm build:lib & pnpm build:esm",
     "release": "ts-node ./scripts/release.ts"
   },
   "dependencies": {
