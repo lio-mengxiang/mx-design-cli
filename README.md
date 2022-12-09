@@ -15,6 +15,15 @@
 - 通过 @mx-deisgn/cli 可以快速启动开发环境，打包项目，测试项目（案例在 example 文件夹下）
 </div>
 
+## master分支，打包和开发环境都是webpack5
+
+## dev/vite分支，开发环境是vite，打包是webpack5 
+如果使用dev/vite分支的代码，要启动项目需要在根目录新建html，文件，并且新增
+```
+<script type="module" src="你的代码入口，比如./src/index.tsx"></srcipt>
+```
+支持自定义配置，需要在根目录新建mx.vite.config.js文件，详细配置的坑请参考这篇文章。（https://juejin.cn/post/7173880104362524702）
+
 ## Install
 
 use `npm`
@@ -195,8 +204,4 @@ test 测试更简单(jest 测试），自动测试**tests**文件夹下的 js，
 
 在 example 文件夹下有一个案例，安装好包的依赖就可以 npm run dev 启动了
 
-## 下个版本升级目标
 
-- 加入自动化部署脚本：github action
-- 加入单元测试覆盖率图标
-- 增加 eslint 和 husky 校验
