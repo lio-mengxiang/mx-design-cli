@@ -46,7 +46,7 @@ const baseConfig: Configuration = {
         use: [
           'thread-loader',
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: babelConfig,
           },
         ],
@@ -68,13 +68,16 @@ const baseConfig: Configuration = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('postcss-flexbugs-fixes'),
-                require('postcss-preset-env')({
-                  autoprefixer: {
-                    flexbox: 'no-2009',
+                'postcss-flexbugs-fixes',
+                [
+                  'postcss-preset-env',
+                  {
+                    autoprefixer: {
+                      flexbox: 'no-2009',
+                    },
+                    stage: 3,
                   },
-                  stage: 3,
-                }),
+                ],
               ],
             },
           },
@@ -102,13 +105,16 @@ const baseConfig: Configuration = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('postcss-flexbugs-fixes'),
-                require('postcss-preset-env')({
-                  autoprefixer: {
-                    flexbox: 'no-2009',
+                'postcss-flexbugs-fixes',
+                [
+                  'postcss-preset-env',
+                  {
+                    autoprefixer: {
+                      flexbox: 'no-2009',
+                    },
+                    stage: 3,
                   },
-                  stage: 3,
-                }),
+                ],
               ],
             },
           },
@@ -136,13 +142,16 @@ const baseConfig: Configuration = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('postcss-flexbugs-fixes'),
-                require('postcss-preset-env')({
-                  autoprefixer: {
-                    flexbox: 'no-2009',
+                'postcss-flexbugs-fixes',
+                [
+                  'postcss-preset-env',
+                  {
+                    autoprefixer: {
+                      flexbox: 'no-2009',
+                    },
+                    stage: 3,
                   },
-                  stage: 3,
-                }),
+                ],
               ],
             },
           },
@@ -255,7 +264,7 @@ const getDevConfig = (): Configuration => {
   });
 
   (config.module.rules[0] as RuleSetRule).use[1].options.plugins.push(
-    require.resolve('react-refresh/babel')
+    'react-refresh/babel'
   );
   ((config.module.rules[1] as RuleSetRule).use as RuleSetUseItem[]).unshift(
     'style-loader'

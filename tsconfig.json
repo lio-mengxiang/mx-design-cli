@@ -6,6 +6,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "./type",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "sourceMap": true,
@@ -13,6 +16,6 @@
     "skipLibCheck": true,
     "types": ["webpack", "node", "jest"]
   },
-  "include": ["src", "webpack.config.js"],
+  "include": ["src"],
   "exclude": ["node_modules", "lib", "es", "**/__tests__/**", "tests"]
 }

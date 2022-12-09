@@ -51,7 +51,7 @@ export const getCustomConfig = (
 ): Partial<CustomConfig> => {
   const configPath = path.join(process.cwd(), configFileName);
   if (fs.existsSync(configPath)) {
-    return require(configPath);
+    return getJSON(configPath);
   }
   return {};
 };
@@ -129,4 +129,11 @@ export function compose(middleware, initOptions) {
     return currMiddleware(() => dispatch(++index), otherOptions);
   }
   dispatch(0);
+}
+
+export function getJSON(path) {
+  const jsonString = fs.readFileSync(path, {
+    encoding: 'utf-8',
+  });
+  return JSON.parse(jsonString);
 }
