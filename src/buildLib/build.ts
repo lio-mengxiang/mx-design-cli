@@ -3,8 +3,10 @@ import webpackMerge from 'webpack-merge';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { copyLess, less2css, buildCjs, buildEsm } from '../config/gulpConfig';
 import getWebpackConfig from '../config/webpackConfig';
-import { getProjectPath, logger, compose, getJSON } from '../utils';
+import { getProjectPath, logger, compose } from '../utils';
 import { BUILD_LIB, CJS, ESM, UMD, COPY_LESS, LESS_2_CSS } from '../constants';
+
+const { name } = require(getProjectPath('package.json'));
 
 const checkName = (outputName, name) => {
   if (!outputName && name?.includes('/')) {
@@ -22,7 +24,6 @@ const checkName = (outputName, name) => {
  * @param outputName 打包出来的名字
  */
 const buildUmd = async ({ analyzerUmd, outDirUmd, entry, outputName }) => {
-  const { name } = getJSON(getProjectPath('package.json'));
   const customizePlugins = [];
   const realName = outputName || name;
   checkName(outputName, name);

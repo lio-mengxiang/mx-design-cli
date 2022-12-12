@@ -1,18 +1,21 @@
 export default {
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         modules: false,
       },
     ],
-    '@babel/preset-react',
-    '@babel/preset-typescript',
+    require.resolve('@babel/preset-react'),
+    require.resolve('@babel/preset-typescript'),
   ],
   plugins: [
-    ['@babel/plugin-transform-runtime', { useESModules: true }],
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-optional-chaining',
+    [
+      require.resolve('@babel/plugin-transform-runtime'),
+      { useESModules: true },
+    ],
+    [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
+    [require.resolve('@babel/plugin-proposal-class-properties')],
+    require.resolve('@babel/plugin-proposal-optional-chaining'),
   ],
 };
