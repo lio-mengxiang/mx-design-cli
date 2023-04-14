@@ -13,10 +13,16 @@ buildSite(commander);
 runDev(commander);
 runTest(commander);
 
-// commander解析命令行参数
+/**
+ * @zh commander解析命令行参数
+ * @en parse the command-line arguments by commander
+ */
 commander.parse(process.argv);
 
-// 如果命令行没有参数如执行mx，则会显示帮助文档
+/**
+ * @zh 如果命令行没有参数如执行mx，则会显示帮助文档
+ * @en if there are no arguments to the command line, such as executing mx, the help documentation will be shown
+ */
 if (!commander.args[0]) {
   commander.help();
 }
