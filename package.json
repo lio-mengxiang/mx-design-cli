@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "1.0.54",
+  "version": "1.0.55",
   "repository": "https://github.com/lio-mengxiang/mx-design-cli.git",
   "description": "Cli Tools for mx Design Project",
   "keywords": [
@@ -63,7 +63,7 @@
     "inquirer": "8.2.0",
     "jest": "^26.5.3",
     "less": "4.1.3",
-    "less-loader": "4.0.0",
+    "less-loader": "11.1.0",
     "mini-css-extract-plugin": "^1.6.0",
     "mkdirp": "^0.5.1",
     "postcss-flexbugs-fixes": "^4.1.0",
