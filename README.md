@@ -1,5 +1,9 @@
 <h1 align="center">@mx-design/cli</h1>
 
+## language
+
+[English](./README.md) | [中文](./README.zh.md)
+
 [Source code analysis](#source_code_analysis)
 
 ## Introduction
