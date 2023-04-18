@@ -6,14 +6,13 @@
   "scripts": {
     "start": "mx dev",
     "build:types": "rimraf types && tsc --outDir types -d --emitDeclarationOnly",
-    "build:es": "rimraf esm && mx buildLib --mode esm --entry-dir ./components --less-2-css --copy-less",
+    "build:es": "rimraf esm && mx buildLib --mode esm --entry-dir ./components --less-2-css",
     "build:cjs": "rimraf lib && mx buildLib --mode cjs --entry-dir ./components --less-2-css --copy-less",
     "build:umd": "rimraf dist && mx buildLib --mode umd --entry ./components/index",
     "build": "yarn build:types && yarn build:cjs && yarn build:es && yarn build:umd",
     "buildSite": "mx buildSite",
     "buildLibHelp": "mx help buildLib",
     "buildSiteHelp": "mx help buildSite",
-    "testHelp": "mx help test",
     "devHelp": "mx help dev"
   },
   "directories": {
@@ -34,7 +33,7 @@
     "web-vitals": "^0.2.4"
   },
   "dependencies": {
-    "@mx-design/cli": "^1.0.1",
+    "@mx-design/cli": "2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },

@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import { Configuration } from 'webpack';
+
 export interface IDevelopmentConfig {
   host: string;
   port: number;
@@ -17,3 +20,16 @@ export interface ITestConfig {
   setupFilesAfterEnv: string;
   watch?: boolean;
 }
+
+export interface CustomConfig extends Configuration {
+  entries: object;
+  banner: string;
+  setBabelOptions: (options: string | { [index: string]: any }) => void;
+  setRules: (rules: Configuration['module']['rules']) => void;
+  setPlugins: (plugins: Configuration['plugins']) => void;
+  setDevOptions: Record<string, any>;
+  setOutput: (outputConfig: any) => void;
+  setConfig: (config: any) => void;
+}
+
+export type AnyFunction = (...args: any[]) => any;

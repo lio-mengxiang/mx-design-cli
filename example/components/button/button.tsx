@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Button extends Component<any, any> {
   props: any;
+
   constructor(props) {
     super(props);
   }

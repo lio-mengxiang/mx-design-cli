@@ -7,12 +7,21 @@ export const buildLib = (commander) => {
    * 这个命令实际上执行的是build文件
    * 我们会打包es和commonjs规范的两个包
    * @en when you input mx buildLib, command will execute
+   * This command actually executes the build file
+   * We will package two packages of es and commonjs specifications
    */
   commander
     .command(BUILD_LIB)
-    .description('打包编译仓库')
-    .option('-a, --analyzerUmd', '是否启用webpack打包分析器')
-    .option('-e, --entry <path>', 'umd打包路径入口文件', './src/index')
+    .description('打包编译仓库(Package and compile project)')
+    .option(
+      '-a, --analyzerUmd',
+      '是否启用webpack打包分析器(Whether to enable the webpack packaging analyzer)'
+    )
+    .option(
+      '-e, --entry <path>',
+      'umd打包路径入口文件(umd mode packaging path entry file)',
+      './src/index'
+    )
     .option('--output-name <name>', '打包Umd格式后对外暴露的名称')
     .option('--entry-dir <path>', 'cjs和esm打包路径入口目录', './src')
     .option('--out-dir-umd <path>', '输出umd格式的目录', './dist')

@@ -1,13 +1,9 @@
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { getProjectPath } from '@mx-design/node-utils';
+import { log } from '@mx-design/web-utils';
 import getWebpackConfig from '../config/webpackConfig';
-import {
-  getProjectPath,
-  getProjectConfig,
-  syncChainFns,
-  isAddForkTsPlugin,
-  logger,
-} from '../utils';
+import { getProjectConfig, syncChainFns, isAddForkTsPlugin } from '../utils';
 import { IDeployConfig } from '../interface';
 import { BUILD_SITE } from '../constants';
 
@@ -30,7 +26,7 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
 
   webpack(config).run((err) => {
     if (err) {
-      logger.error('webpackError: ', JSON.stringify(err));
+      log.error('webpackError: ', JSON.stringify(err));
     }
   });
 };
