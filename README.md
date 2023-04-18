@@ -4,7 +4,7 @@
 
 ## Introduction
 
-- [x] easy to develop: one line command to start react + less project
+- [v] easy to develop: one line command to start react + less project
 - [x] easy to pack business code: one line of command to package react business projects, using webpack5, no need to pay attention to webpack configuration and optimization, we have done it for you
 - [x] easy to package react component library: one line of command to package react component library, the packaging method is the same as ant design (package component library should be loaded on demand, which is different from the configuration of business code packaging)
 
