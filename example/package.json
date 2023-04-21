@@ -33,7 +33,7 @@
     "web-vitals": "^0.2.4"
   },
   "dependencies": {
-    "@mx-design/cli": "2.1.0",
+    "@mx-design/cli": "2.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
