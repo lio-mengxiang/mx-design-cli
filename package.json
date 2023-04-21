@@ -81,7 +81,7 @@
     "@svgr/webpack": "^5.5.0",
     "ts-node": "10.5.0",
     "@mx-design/web-utils": "0.1.1",
-    "@mx-design/node-utils": "0.1.1"
+    "@mx-design/node-utils": "0.1.2"
   },
   "devDependencies": {
     "@mx-design/release": "2.2.22",
