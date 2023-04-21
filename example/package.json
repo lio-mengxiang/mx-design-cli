@@ -30,14 +30,9 @@
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.7",
     "typescript": "^4.0.5",
-    "web-vitals": "^0.2.4"
+    "@mx-design/cli": "2.2.0"
   },
   "dependencies": {
-    "@mx-design/cli": "2.1.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
-  },
-  "peerDependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },

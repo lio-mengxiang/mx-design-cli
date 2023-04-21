@@ -2141,10 +2141,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@mx-design/cli@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/@mx-design/cli/-/cli-2.1.0.tgz#00ba69f101092720042147bf9af01d1c9163bda9"
-  integrity sha512-sJot9H1vh5YU4hgP0w7LGxXxX/QBEbcX3tm5MooankJ8ztjVI6mW4QY5ookZDffmRJhgskDfuU442vw908twLg==
+"@mx-design/cli@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@mx-design/cli/-/cli-2.2.0.tgz#8354d96c6c8a2d90b349e3103d7dbc560906cce8"
+  integrity sha512-i3Mzg5QiBD/rqV+z1sjm4DwgGDiQxQtoMy5Alz2kcVVuAEd2VvH5pIBha7obCG1YK7uli9BbMdYjE8R8ONpNdw==
   dependencies:
     "@babel/cli" "^7.13.10"
     "@babel/core" "^7.13.10"
@@ -11550,11 +11550,6 @@ wcwidth@^1.0.1:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
-
-web-vitals@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-0.2.4.tgz#ec3df43c834a207fd7cdefd732b2987896e08511"
-  integrity sha512-6BjspCO9VriYy12z356nL6JBS0GYeEcA457YyRzD+dD6XYCQ75NKhcOHUMHentOE7OcVCIXXDvOm0jKFfQG2Gg==
 
 webidl-conversions@^5.0.0:
   version "5.0.0"
