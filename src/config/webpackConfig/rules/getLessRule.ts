@@ -12,7 +12,7 @@ export const getLessRule = (afterFn?: AnyFunction) =>
           options: {
             importLoaders: 2,
             modules: {
-              localIdentName: '[local]-[hash:5]',
+              auto: (resourcePath) => resourcePath.endsWith('.module.less')
             },
           },
         },
