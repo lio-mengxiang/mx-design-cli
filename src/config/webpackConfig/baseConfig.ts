@@ -35,7 +35,7 @@ export function getBaseConfig(getRule: RuleSetRule[]): Configuration {
       rules: getRule,
     },
     resolve: {
-      extensions: [' ', '.ts', '.tsx', '.js', '.jsx', '.less', '.svg'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.less', '.svg'],
     },
     plugins: [
       new WebpackBar({}),

@@ -5,7 +5,6 @@ export const getCssRule = (afterFn?: AnyFunction) =>
   after(function _() {
     return {
       test: /\.(css)$/,
-      exclude: /node_modules/,
       use: [
         {
           loader: 'css-loader',

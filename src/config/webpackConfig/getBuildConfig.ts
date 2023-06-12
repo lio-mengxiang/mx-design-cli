@@ -6,6 +6,9 @@ import TerserPlugin from 'terser-webpack-plugin'; // 压缩代码
 import { getBaseConfig } from './baseConfig';
 import { getRule } from './rules';
 
+
+export const getBuildConfig = (): Configuration => {
+
 const getBuildRule = getRule({
   afterLessRule: (rule) => {
     (rule.use as RuleSetUseItem[]).unshift({
@@ -25,7 +28,6 @@ const getBuildRule = getRule({
   },
 });
 
-export const getBuildConfig = (): Configuration => {
   const config: Configuration = webpackMerge({}, getBaseConfig(getBuildRule), {
     mode: 'production',
     devtool: 'hidden-source-map',

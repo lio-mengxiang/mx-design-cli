@@ -5,7 +5,6 @@ export const getLessRule = (afterFn?: AnyFunction) =>
   after(function _() {
     return {
       test: /\.(less)$/,
-      exclude: /node_modules/,
       use: [
         {
           loader: 'css-loader',
