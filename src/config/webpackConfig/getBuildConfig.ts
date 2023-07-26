@@ -1,32 +1,13 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpackMerge from 'webpack-merge';
-import { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
+import { Configuration } from 'webpack';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'; // 压缩css插件
 import TerserPlugin from 'terser-webpack-plugin'; // 压缩代码
 import { getBaseConfig } from './baseConfig';
 import { getRule } from './rules';
 
-
 export const getBuildConfig = (): Configuration => {
-
-const getBuildRule = getRule({
-  afterLessRule: (rule) => {
-    (rule.use as RuleSetUseItem[]).unshift({
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        publicPath: '../',
-      },
-    });
-  },
-  afterCssRule: (rule) => {
-    (rule.use as RuleSetUseItem[]).unshift({
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        publicPath: '../',
-      },
-    });
-  },
-});
+  const getBuildRule = getRule({});
 
   const config: Configuration = webpackMerge({}, getBaseConfig(getBuildRule), {
     mode: 'production',
@@ -36,12 +17,6 @@ const getBuildRule = getRule({
       chunkFilename: 'js/[name].[chunkhash:8].js',
       publicPath: '/',
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: 'stylesheet/[name].[contenthash:8].css',
-        chunkFilename: 'stylesheet/[id].[contenthash:8].css',
-      }),
-    ],
   });
 
   config.optimization.minimizer = [

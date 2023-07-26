@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "repository": "https://github.com/lio-mengxiang/mx-design-cli.git",
   "description": "Cli Tools for Mx Design Project",
   "keywords": [
