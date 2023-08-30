@@ -45,7 +45,7 @@ const buildLib = async ({
           }),
         {
           text: 'buildEsm ing...',
-          successText: 'buildEsm computed',
+          successText: 'buildEsm success',
           failText: 'buildEsm failed',
         }
       );
@@ -62,9 +62,9 @@ const buildLib = async ({
             entryDir: otherOptions.entryDir,
           }),
         {
-          text: 'less2Css ing...',
-          successText: 'less2css computed',
-          failText: 'less2css failed',
+          text: 'buildCjs ing...',
+          successText: 'buildCjs success',
+          failText: 'buildCjs failed',
         }
       );
       next();
@@ -83,7 +83,7 @@ const buildLib = async ({
           }),
         {
           text: 'less2Css ing...',
-          successText: 'less2css computed',
+          successText: 'copyLess success',
           failText: 'less2css failed',
         }
       );

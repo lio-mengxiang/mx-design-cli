@@ -11,7 +11,8 @@ export const getLessRule = (afterFn?: AnyFunction) =>
           options: {
             importLoaders: 2,
             modules: {
-              auto: (resourcePath) => resourcePath.endsWith('.module.less')
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+              auto: (resourcePath) => resourcePath.endsWith('.module.less'),
             },
           },
         },
