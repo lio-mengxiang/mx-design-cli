@@ -83,7 +83,7 @@ const buildLib = async ({
           }),
         {
           text: 'less2Css ing...',
-          successText: 'less2css success',
+          successText: 'copyLess success',
           failText: 'less2css failed',
         }
       );
