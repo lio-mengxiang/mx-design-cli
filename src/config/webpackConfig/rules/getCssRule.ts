@@ -6,6 +6,7 @@ export const getCssRule = (afterFn?: AnyFunction) =>
     return {
       test: /\.(css)$/,
       use: [
+        'style-loader',
         {
           loader: 'css-loader',
           options: {

@@ -1,6 +1,6 @@
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpackMerge from 'webpack-merge';
-import webpack, { Configuration, RuleSetUseItem } from 'webpack';
+import webpack, { Configuration } from 'webpack';
 import { getBaseConfig } from './baseConfig';
 import { getRule } from './rules';
 
@@ -8,12 +8,6 @@ export const getDevConfig = (): Configuration => {
   const getDevRule = getRule({
     afterJsTsRule: (rule) => {
       rule.use[1].options.plugins.push(require.resolve('react-refresh/babel'));
-    },
-    afterLessRule: (rule) => {
-      (rule.use as RuleSetUseItem[]).unshift('style-loader');
-    },
-    afterCssRule: (rule) => {
-      (rule.use as RuleSetUseItem[]).unshift('style-loader');
     },
   });
 

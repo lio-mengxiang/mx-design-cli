@@ -103,7 +103,7 @@ const buildLib = async ({
           }),
         {
           text: 'copyLess ing..',
-          successText: 'copyLess computed',
+          successText: 'copyLess success',
           failText: 'copyLess failed',
         }
       );
