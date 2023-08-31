@@ -34,6 +34,12 @@ export const getBuildConfig = (): Configuration => {
       chunkFilename: 'js/[name].[chunkhash:8].js',
       publicPath: '/',
     },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'stylesheet/[name].[contenthash:8].css',
+        chunkFilename: 'stylesheet/[id].[contenthash:8].css',
+      }),
+    ],
   });
 
   config.optimization.minimizer = [
