@@ -8,5 +8,6 @@ export const ESM = 'esm';
 export const CJS = 'cjs';
 export const LIB = 'lib';
 export const UMD = 'umd';
+export const UMD_UGLY = 'umdUgly';
 export const LESS_2_CSS = 'less2Css';
 export const COPY_LESS = 'copyLess';

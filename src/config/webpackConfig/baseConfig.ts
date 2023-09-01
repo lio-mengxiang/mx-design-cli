@@ -1,7 +1,10 @@
 import webpack, { Configuration, RuleSetRule } from 'webpack';
 import WebpackBar from 'webpackbar';
 
-export function getBaseConfig(getRule: RuleSetRule[]): Configuration {
+export function getBaseConfig(
+  getRule: RuleSetRule[],
+  needRuntimeChunk
+): Configuration {
   return {
     target: 'web',
     output: {
@@ -10,7 +13,7 @@ export function getBaseConfig(getRule: RuleSetRule[]): Configuration {
       assetModuleFilename: 'asset/[name].[contenthash:8].[ext]',
     },
     optimization: {
-      runtimeChunk: true,
+      runtimeChunk: !!needRuntimeChunk,
       splitChunks: {
         minChunks: 2,
         chunks: 'all',

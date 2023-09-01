@@ -27,21 +27,21 @@ export const buildUmd = async ({
   outDirUmd,
   entry,
   outputName,
+  mode,
 }) => {
   const customizePlugins = [];
   const realName = outputName || name;
+  const entryFiles = entry.split(',').map((p) => getProjectPath(p));
   checkName(outputName, name);
-  const umdTask = (type) => {
+  const umdTask = (mode) => {
     return new Promise((resolve, reject) => {
-      const config = webpackMerge(getWebpackConfig(type), {
+      const config = webpackMerge(getWebpackConfig(mode), {
         entry: {
-          [realName]: getProjectPath(entry),
+          [realName]: entryFiles,
         },
         output: {
           path: getProjectPath(outDirUmd),
           library: realName,
-          libraryTarget: 'umd',
-          libraryExport: 'default',
         },
         plugins: customizePlugins,
       });
@@ -67,7 +67,7 @@ export const buildUmd = async ({
       });
     });
   };
-  await withOra(() => umdTask(BUILD_LIB), {
+  await withOra(() => umdTask(mode), {
     text: 'building umd',
     successText: 'umd computed',
     failText: 'umd failed',
