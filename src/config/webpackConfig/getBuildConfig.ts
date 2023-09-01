@@ -26,21 +26,25 @@ export const getBuildConfig = (): Configuration => {
     },
   });
 
-  const config: Configuration = webpackMerge({}, getBaseConfig(getBuildRule), {
-    mode: 'production',
-    devtool: 'hidden-source-map',
-    output: {
-      filename: 'js/[name].js',
-      chunkFilename: 'js/[name].[chunkhash:8].js',
-      publicPath: '/',
-    },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: 'stylesheet/[name].[contenthash:8].css',
-        chunkFilename: 'stylesheet/[id].[contenthash:8].css',
-      }),
-    ],
-  });
+  const config: Configuration = webpackMerge(
+    {},
+    getBaseConfig(getBuildRule, true),
+    {
+      mode: 'production',
+      devtool: 'hidden-source-map',
+      output: {
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].[chunkhash:8].js',
+        publicPath: '/',
+      },
+      plugins: [
+        new MiniCssExtractPlugin({
+          filename: 'stylesheet/[name].[contenthash:8].css',
+          chunkFilename: 'stylesheet/[id].[contenthash:8].css',
+        }),
+      ],
+    }
+  );
 
   config.optimization.minimizer = [
     // 压缩js文件

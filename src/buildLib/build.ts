@@ -30,6 +30,7 @@ const buildLib = async ({
         outDirUmd: otherOptions.outDirUmd,
         entry: otherOptions.entry,
         outputName: otherOptions.outputName,
+        mode,
       });
       next();
     });

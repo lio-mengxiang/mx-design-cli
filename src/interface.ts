@@ -1,12 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { Configuration } from 'webpack';
+import { BUILD_LIB, BUILD_SITE, DEV, UMD, UMD_UGLY } from './constants';
 
 export interface IDevelopmentConfig {
   host: string;
   port: number;
 }
 
-export type IWebpackConfigType = 'buildLib' | 'dev' | 'buildSite';
+export type IWebpackConfigType =
+  | typeof BUILD_LIB
+  | typeof DEV
+  | typeof BUILD_SITE
+  | typeof UMD
+  | typeof UMD_UGLY;
 
 export interface IDeployConfig {
   outDir: string;

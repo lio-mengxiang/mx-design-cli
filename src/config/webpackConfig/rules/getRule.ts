@@ -13,6 +13,7 @@ type IProps = {
   afterLessRule?: AnyFunction;
   afterImageRule?: AnyFunction;
   afterFontRule?: AnyFunction;
+  options?: Record<string, any>;
 };
 
 export function getRule({
@@ -22,10 +23,11 @@ export function getRule({
   afterLessRule,
   afterImageRule,
   afterFontRule,
+  options,
 }: IProps) {
   const result = [];
   result.push(getJsTsRule(afterJsTsRule)());
-  result.push(getLessRule(afterLessRule)());
+  result.push(getLessRule(afterLessRule)(options));
   result.push(getCssRule(afterCssRule)());
   result.push(getImageRule(afterImageRule)());
   result.push(getFontRule(afterFontRule)());

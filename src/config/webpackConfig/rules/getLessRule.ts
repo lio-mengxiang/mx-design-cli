@@ -6,7 +6,6 @@ export const getLessRule = (afterFn?: AnyFunction) =>
     return {
       test: /\.(less)$/,
       use: [
-        'style-loader',
         {
           loader: 'css-loader',
           options: {
