@@ -28,12 +28,15 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
     if (err) {
       return log.error('get error from webpack compiler, full error:', err);
     }
-    if (stats) {
-      const info = stats.toJson({
-        all: false,
-        errors: true,
-      });
-      log.error('get error from webpack status, full error:', info);
+    const info = stats.toJson({
+      all: false,
+      errors: true,
+    });
+    if (info.errors && info.errors.length) {
+      log.error(
+        'get error from webpack status, full error:',
+        JSON.stringify(info)
+      );
     }
   });
 };
