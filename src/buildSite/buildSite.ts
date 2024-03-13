@@ -24,9 +24,16 @@ export default ({ outDir, analyzer }: IDeployConfig) => {
     );
   }
 
-  webpack(config).run((err) => {
+  webpack(config).run((err, stats) => {
     if (err) {
-      log.error('webpackError: ', JSON.stringify(err));
+      return log.error('get error from webpack compiler, full error:', err);
+    }
+    if (stats) {
+      const info = stats.toJson({
+        all: false,
+        errors: true,
+      });
+      log.error('get error from webpack status, full error:', info);
     }
   });
 };

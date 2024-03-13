@@ -1,6 +1,6 @@
 {
   "name": "@mx-design/cli",
-  "version": "2.3.6",
+  "version": "2.3.8",
   "repository": "https://github.com/lio-mengxiang/mx-design-cli.git",
   "description": "Cli Tools for Mx Design Project",
   "keywords": [
@@ -80,8 +80,8 @@
     "webpackbar": "^5.0.0-3",
     "@svgr/webpack": "^5.5.0",
     "ts-node": "10.5.0",
-    "@mx-design/web-utils": "0.1.1",
-    "@mx-design/node-utils": "0.1.2"
+    "@mx-design/web-utils": "0.1.8",
+    "@mx-design/node-utils": "0.1.3"
   },
   "devDependencies": {
     "@mx-design/release": "2.2.22",
