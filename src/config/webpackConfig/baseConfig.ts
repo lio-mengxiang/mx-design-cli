@@ -3,7 +3,7 @@ import WebpackBar from 'webpackbar';
 
 export function getBaseConfig(
   getRule: RuleSetRule[],
-  needRuntimeChunk
+  needRuntimeChunk,
 ): Configuration {
   return {
     target: 'web',
@@ -41,7 +41,7 @@ export function getBaseConfig(
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.less', '.svg'],
     },
     plugins: [
-      new WebpackBar({}),
+      // new WebpackBar({}),
       new webpack.DefinePlugin({
         'process.env': JSON.stringify(process.env),
       }),
